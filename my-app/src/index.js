@@ -8,7 +8,6 @@ const rootElement = document.getElementById('root');
 
 createRoot(rootElement).render(
   <Router>
-    <Navbar />
     <App />
   </Router>
 );
