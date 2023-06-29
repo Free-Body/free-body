@@ -1,12 +1,13 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import logger from 'redux-logger';
-const middleware = [...getDefaultMiddleware(), logger];
+// import { configureStore } from '@reduxjs/toolkit';
+// import logger from 'redux-logger';
 
-const store = configureStore({
-  reducer: {
+// const middleware = (getDefaultMiddleware) => {
+//   return [...getDefaultMiddleware(), logger];
+// };
 
-  },
-  middleware: middleware,
-});
+// const store = configureStore({
+//   reducer: {},
+//   middleware: middleware,
+// });
 
-export default store
+// export default store;

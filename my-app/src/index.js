@@ -1,16 +1,14 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
-import { Provider } from 'react-redux';
-import store from './app/store.js';
-import App from './app/App';
+import { createRoot } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
+import Navbar from './features/navbar';
+import App from './app/App';
 
-const root = createRoot(document.createElement('app'));
+const rootElement = document.getElementById('root');
 
-root.render(
+createRoot(rootElement).render(
   <Router>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <Navbar />
+    <App />
   </Router>
 );
