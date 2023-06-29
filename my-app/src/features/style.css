@@ -41,13 +41,15 @@
   font-weight: 400;
   line-height: normal;
   margin-bottom: 10px;
+  white-space: nowrap; 
 }
 
 .nav-link:hover {
   display: flex;
   width: 210.568px;
   height: 61.783px;
-  transform: rotate(0.271deg);
+  transform: translate(10px, 0);
+  justify-content: center;
   flex-direction: column;
   justify-content: center;
   flex-shrink: 0;
