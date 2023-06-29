@@ -1,5 +1,3 @@
-//https://www.codebrainer.com/blog/learn-matterjs-with-examples
-
 let Engine = Matter.Engine,
   Render = Matter.Render,
   Runner = Matter.Runner,
@@ -58,23 +56,37 @@ function clearWorld(exampleName) {
 function StartSlingshot() {
   clearWorld("Slingshot");
 
+  let heightRange = document.getElementById("heightRange");
+  let heightVal = document.getElementById("heightVal");
+  let realHeight = 600-heightRange.value;
+
   // add bodies
   let ground = Bodies.rectangle(395, 600, 815, 50, { isStatic: true });
   let rockOptions = { density: 0.004 };
-  let rock = Bodies.polygon(170, 450, 8, 20, rockOptions);
-  let anchor = { x: 170, y: 450 };
+  let rock = Bodies.polygon(170, realHeight, 8, 20, rockOptions);
+  let anchor = { x: 170, y: realHeight};
   let elastic = Constraint.create({
     pointA: anchor,
     bodyB: rock,
     stiffness: 0.05,
     render: { strokeStyle: "gray", lineWidth: 2 },
+  });  
+  
+  heightRange.addEventListener("input", function () {
+    let height = parseFloat(heightRange.value);
+    anchor.y = height;
+    heightVal.innerHTML = `${height}`;
+    // Update the engine to apply the changes
+    Engine.update(engine);
   });
 
   let massRange = document.getElementById("massRange");
+  let massVal = document.getElementById("massVal");
 
   massRange.addEventListener("input", function () {
     let massValue = parseFloat(massRange.value);
     rock.mass = massValue;
+    massVal.innerHTML = `${massValue}`;
     // Update the engine to apply the changes
     Engine.update(engine);
   });
@@ -85,7 +97,7 @@ function StartSlingshot() {
     return Bodies.rectangle(x, y, 25, 40);
   });
 
-  // add mouse control
+//   add mouse control
   let mouse = Mouse.create(render.canvas),
     mouseConstraint = MouseConstraint.create(engine, {
       mouse: mouse,
@@ -100,14 +112,14 @@ function StartSlingshot() {
   Events.on(engine, "afterUpdate", function () {
     if (
       mouseConstraint.mouse.button === -1 &&
-      (rock.position.x > 190 || rock.position.y < 430)
+      (rock.position.x > 190 || rock.position.y < realHeight-(.9*realHeight))
     ) {
-      rock = Bodies.polygon(170, 450, 7, 20, rockOptions);
+      rock = Bodies.polygon(170, realHeight, 7, 20, rockOptions);
       Composite.add(engine.world, rock);
       elastic.bodyB = rock;
     }
   });
-
+  
   Composite.add(engine.world, [ground, ground2, pyramid, rock, elastic]);
   Composite.add(engine.world, mouseConstraint);
 
