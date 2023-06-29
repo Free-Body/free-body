@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../features/navbar";
+import Navbar from "../features/Navbar/navbar";
 import AppRoutes from "./AppRoutes";
 
 const App = () => {
