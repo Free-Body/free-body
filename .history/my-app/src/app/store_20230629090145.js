@@ -9,4 +9,5 @@ const store = configureStore({
   middleware: middleware,
 });
 
-export default store
+export default store;
+export * from '../features/auth/authSlice';
