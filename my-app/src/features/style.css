@@ -32,7 +32,7 @@
   padding-left: 10px;
 }
 
-.nav-link, .home-header {
+.nav-link, .header {
   color: #FFF;
   text-decoration: none;
   font-size: 50px;
@@ -44,7 +44,7 @@
   white-space: nowrap; 
 }
 #line2{
-  
+
 }
 
 .nav-link:hover {
