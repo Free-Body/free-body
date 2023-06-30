@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Boogaloo&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Boogaloo&display=swap");
 
 .navbar-container {
   background-color: transparent;
@@ -32,8 +32,9 @@
   padding-left: 10px;
 }
 
-.nav-link, .home-header {
-  color: #FFF;
+.nav-link,
+.home-header {
+  color: #fff;
   text-decoration: none;
   font-size: 50px;
   font-family: Boogaloo;
@@ -41,10 +42,9 @@
   font-weight: 400;
   line-height: normal;
   margin-bottom: 10px;
-  white-space: nowrap; 
+  white-space: nowrap;
 }
-#line2{
-  
+#line2 {
 }
 
 .nav-link:hover {
