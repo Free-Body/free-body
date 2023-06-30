@@ -12,8 +12,8 @@ const How = () => {
           <Link to="/projectile-motion">
             <img
               id="boyimage"
-              src={require("./images/boythrowing.png")}
-              alt="boy throwing ball"
+              src={require("./images/projectiles.png")}
+              alt="pizza"
             />
           </Link>
           <h2>Projectile Motion</h2>
@@ -22,7 +22,7 @@ const How = () => {
           <Link to="/acceleration">
             <img
               id="speedometerimage"
-              src={require("./images/speedometer.png")}
+              src={require("./images/acceleration.png")}
               alt="speedometer"
             />
           </Link>
