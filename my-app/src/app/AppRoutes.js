@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "../features/homePage";
+import Home from "../features/HomePage/homePage";
 import About from "../features/aboutPage";
 import Meet from "../features/meetTheTeam";
 import How from "../features/howItWorks";
