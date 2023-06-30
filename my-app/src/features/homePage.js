@@ -2,9 +2,9 @@ import React from "react";
 
 const Home = () => {
   return (
-    <div>
-      <h1>Welcome to the Home Page</h1>
-      <p>This is the content of the Home Page.</p>
+    <div class='home-header'>
+      <p id='line1'>PHYSICS PROBLEMS CAN BE THE MOST DIFFICULT TO SOLVE</p>
+      <p id='line2'>BUT THEY DON'T HAVE TO BE THE MOST BORING</p>
     </div>
   );
 };
