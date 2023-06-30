@@ -48,16 +48,16 @@ function clearWorld() {
 // pyramid class
 class Pyramid {
   constructor(ground2_x) {
-    this.position = ground2_x - 60;
+    this.position = ground2_x - 80;
     this.body = Composites.pyramid(
-      ground2_x - 60,
+      ground2_x - 80,
       0,
       3,
       6,
       0,
       0,
       function (x, y) {
-        return Bodies.rectangle(x, y, 25, 40, { label: "hitBlock" });
+        return Bodies.rectangle(x, y, 70, 100, { label: "hitBlock", render: {sprite: {texture: "../../public/remy.png", xScale: 80/595, yScale: 100/858}} });
       }
     );
     this.blockCount = 4;
@@ -94,12 +94,12 @@ function StartSlingshot() {
   let ground = Bodies.rectangle(width / 2, height, groundWidth, groundHeight, {
     isStatic: true,
   });
-  let rockOptions = { density: 0.004 };
-  let rock = Bodies.polygon(170, realHeight, 8, realMass, rockOptions);
+  let pizzaOptions = { density: 0.004, render: { sprite: {texture: "../../public/pizza.png", xScale: realMass/2000, yScale: realMass/2011}} };
+  let pizza = Bodies.polygon(170, realHeight, 8, realMass, pizzaOptions);
   let anchor = { x: 170, y: realHeight };
   let elastic = Constraint.create({
     pointA: anchor,
-    bodyB: rock,
+    bodyB: pizza,
     length: 0.01,
     damping: 0.01,
     stiffness: 0.05,
@@ -117,11 +117,12 @@ function StartSlingshot() {
   massRange.addEventListener("input", function () {
     let massValue = parseFloat(massRange.value);
     realMass = massValue;
-    rock.mass = massValue;
+    pizza.mass = massValue;
     massVal.innerHTML = `${massValue}`;
-    rock = Bodies.polygon(170, realHeight, 7, massValue, rockOptions);
-    Composite.add(engine.world, rock);
-    elastic.bodyB = rock;
+    pizzaOptions = { density: 0.004, render: { sprite: {texture: "../../public/pizza.png", xScale: realMass/2000, yScale: realMass/2011}} };
+    pizza = Bodies.polygon(170, realHeight, 7, massValue, pizzaOptions);
+    Composite.add(engine.world, pizza);
+    elastic.bodyB = pizza;
     Engine.update(engine);
   });
   // set pyramid
@@ -134,11 +135,10 @@ function StartSlingshot() {
     groundHeight / 3,
     { isStatic: true }
   );
-  //   let pyramid = Composites.pyramid(ground2_x - 60, 0, 3, 6, 0, 0, function (x, y) {
-  //     return Bodies.rectangle(x, y, 25, 40, {label: "hitBlock"});
-  //   });
+
   let pyramidInstance = new Pyramid(ground2_x);
   let pyramid = pyramidInstance.body;
+
   // add mouse control
   let mouse = Mouse.create(render.canvas),
     mouseConstraint = MouseConstraint.create(engine, {
@@ -164,14 +164,15 @@ function StartSlingshot() {
 
     if (
       mouseConstraint.mouse.button === -1 &&
-      (rock.position.x > 190 || rock.position.y < realHeight - 0.9 * realHeight)
+      (pizza.position.x > 190 || pizza.position.y < realHeight - 0.9 * realHeight)
     ) {
-      rock = Bodies.polygon(170, realHeight, 7, realMass, rockOptions);
-      Composite.add(engine.world, rock);
-      elastic.bodyB = rock;
+      pizzaOptions = { density: 0.004, render: { sprite: {texture: "../../public/pizza.png", xScale: realMass/2000, yScale: realMass/2011}} };
+      pizza = Bodies.polygon(170, realHeight, 7, realMass, pizzaOptions);
+      Composite.add(engine.world, pizza);
+      elastic.bodyB = pizza;
     }
   });
-  Composite.add(engine.world, [ground, ground2, pyramid, rock, elastic]);
+  Composite.add(engine.world, [ground, ground2, pyramid, pizza, elastic]);
   Composite.add(engine.world, mouseConstraint);
   // keep the mouse in sync with rendering
   render.mouse = mouse;
