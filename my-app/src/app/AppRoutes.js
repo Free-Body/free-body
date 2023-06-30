@@ -5,6 +5,10 @@ import About from "../features/aboutPage";
 import Meet from "../features/meetTheTeam";
 import How from "../features/howItWorks";
 import Activity from "../features/activityLand";
+import Projectiles from "../features/LearnAbout/projectiles";
+import Acceleration from "../features/LearnAbout/acceleration";
+import Buoyancy from "../features/LearnAbout/buoyancy";
+import Circuitry from "../features/LearnAbout/circuits";
 
 const AppRoutes = () => {
   return (
@@ -15,6 +19,11 @@ const AppRoutes = () => {
         <Route path="/meettheteam" element={<Meet />} />
         <Route path="/howitworks" element={<How />} />
         <Route path="/activityland" element={<Activity />} />
+
+        <Route path="/projectile-motion" element={<Projectiles />} />
+        <Route path="/acceleration" element={<Acceleration />} />
+        <Route path="/buoyancy" element={<Buoyancy />} />
+        <Route path="/circuitry" element={<Circuitry />} />
       </Routes>
     </div>
   );
