@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import aboutImage from "../images/about.png";
-import activityLandImage from "../images/activityland-home.png";
+import activityLandImage from "../images/physicsuniversity.png";
 import howItWorksImage from "../images/how-it-works.png";
 import meetTheTeamImage from "../images/meet-the-team.png";
 

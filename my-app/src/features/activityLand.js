@@ -12,7 +12,9 @@ function InteractiveImage() {
           width: "80%",
           height: "auto",
           float: "right",
-          marginTop: "-34%",
+          marginTop: "-30%",
+          borderRadius: "177px",
+          paddingRight: "45px",
         }}
       />
       <map name="image-map">
