@@ -1,3 +1,5 @@
+import Matter from "matter-js"
+
 let Engine = Matter.Engine,
   Render = Matter.Render,
   Runner = Matter.Runner,
@@ -15,7 +17,7 @@ let render;
 let runner;
 
 //this function initializes the aggregate
-function init() {
+export const init = function () {
   const winMessage = document.createElement("h2");
   winMessage.id = "winMessage";
   document.body.appendChild(winMessage);
@@ -53,7 +55,9 @@ class Pyramid {
       0,
       0,
       function (x, y) {
-        return Bodies.rectangle(x, y, 70, 100, { label: "hitBlock", render: {sprite: {texture: "../../public/remy.png", xScale: 80/595, yScale: 100/858}} });
+        return Bodies.rectangle(x, y, 70, 100, { label: "hitBlock", 
+        // render: {sprite: {texture: "../../public/remy.png", xScale: 80/595, yScale: 100/858}}
+       });
       }
     );
     this.blockCount = 4;
@@ -75,7 +79,7 @@ class Pyramid {
 }
 
 //plays game
-function StartSlingshot() {
+export const StartSlingshot = function() {
   clearWorld();
 
   //constants
@@ -135,6 +139,8 @@ function StartSlingshot() {
         },
       },
     });
+
+  //checks results of collision  
   Events.on(engine, "afterUpdate", function () {
     results(pyramid, pyramidInstance, ground2, mouseConstraint, pizza, realHeight, realMass, elastic);
     if (
@@ -153,7 +159,7 @@ function StartSlingshot() {
 }
 
 function createPizza(realHeight, realMass) {
-  let pizzaOptions = { density: 0.004, render: { sprite: {texture: "../../public/pizza.png", xScale: realMass/2000, yScale: realMass/2011}} };
+  let pizzaOptions = { density: 0.004 };
   let pizza = Bodies.polygon(170, realHeight, 8, realMass, pizzaOptions);
   return pizza;
 }
@@ -174,7 +180,6 @@ function heightListener(height, anchor) {
   let heightRange = document.getElementById("heightRange");
   let heightVal = document.getElementById("heightVal");
   let realHeight = height - heightRange.value;
-  console.log(heightRange.value)
   let heightInput = parseFloat(heightRange.value);
   realHeight = height - heightRange.value;
   anchor.y = realHeight;

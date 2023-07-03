@@ -7,4 +7,5 @@ module.exports = {
     filename: 'bundle.js',
   },
   // Add any necessary loaders, plugins, or other configuration here
+  devtool: 'source-map'
 };
