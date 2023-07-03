@@ -236,3 +236,24 @@
   margin-top: -40%;
   margin-left: 20%;
 }
+
+.aboutclass {
+  display: flex;
+  width: 964px;
+  height: 660px;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #004aad;
+  font-size: 40px;
+  font-family: Boogaloo;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: -30%;
+  margin-left: 20%;
+}
+
+#abouthead {
+  text-align: center;
+}
