@@ -3,6 +3,7 @@ import charlotteImage from "./images/charlotte.png";
 import jessicaImage from "./images/jessica.png";
 import ashleyImage from "./images/ashley.png";
 import carinaImage from "./images/carina.png";
+import backImage from "./images/back.png";
 
 const Home = () => {
   const handleLinkClick = (url) => {
@@ -12,6 +13,7 @@ const Home = () => {
   return (
     <div>
       <p id="meet">Meet our team on LinkedIn!</p>
+      <img src={backImage} alt="background" id="backimg" />
       <div className="home-pics">
         <div
           className="person-card"
