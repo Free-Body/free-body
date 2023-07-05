@@ -3,7 +3,7 @@ import charlotteImage from "./images/charlotte.png";
 import jessicaImage from "./images/jessica.png";
 import ashleyImage from "./images/ashley.png";
 import carinaImage from "./images/carina.png";
-import backImage from "./images/back.png";
+import backImage from "./images/earth.png";
 
 const Home = () => {
   const handleLinkClick = (url) => {
@@ -12,6 +12,10 @@ const Home = () => {
 
   return (
     <div>
+      <div className="home-header">
+        <p id="line1">PHYSICS PROBLEMS CAN BE THE MOST DIFFICULT TO SOLVE</p>
+        <p id="line2">BUT THEY DON'T HAVE TO BE THE MOST BORING</p>
+      </div>
       <p id="meet">Meet our team on LinkedIn!</p>
       <img src={backImage} alt="background" id="backimg" />
       <div className="home-pics">
