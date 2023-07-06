@@ -1,4 +1,3 @@
-//https://www.codebrainer.com/blog/learn-matterjs-with-examples
 let Engine = Matter.Engine,
   Render = Matter.Render,
   Runner = Matter.Runner,
@@ -13,8 +12,12 @@ let Engine = Matter.Engine,
 let engine;
 let render;
 let runner;
+let knockedBlocks = 0;
 //this function initializes the aggregate
 function init() {
+  const winMessage = document.createElement("h2");
+  winMessage.id = "winMessage";
+  document.body.appendChild(winMessage);
   // create an engine
   engine = Engine.create();
   // create a renderer
@@ -37,57 +40,108 @@ function init() {
   Runner.run(runner, engine);
 }
 let lastClear = "(not given)";
-//this function clears world between examples
-function clearWorld(exampleName) {
-  if (lastClear != exampleName) {
-    lastClear = exampleName;
-    Matter.Composite.clear(engine.world, false);
+//this function clears world between games
+function clearWorld() {
+  Matter.Composite.clear(engine.world, false);
+}
+
+// pyramid class
+class Pyramid {
+  constructor(ground2_x) {
+    this.position = ground2_x - 60;
+    this.body = Composites.pyramid(
+      ground2_x - 60,
+      0,
+      3,
+      6,
+      0,
+      0,
+      function (x, y) {
+        return Bodies.rectangle(x, y, 25, 40, { label: "hitBlock" });
+      }
+    );
+    this.blockCount = 4;
+  }
+  knockOver() {
+    this.blockCount--;
+    if (this.blockCount === 0) {
+      // Display win message
+      const winMessage = document.createElement("h2");
+      winMessage.textContent = "You won!";
+      document.body.appendChild(winMessage);
+
+      setTimeout(function () {
+        winMessage.remove();
+      }, 5000);
+    }
   }
 }
 function StartSlingshot() {
-  clearWorld("Slingshot");
+  clearWorld();
+  //constants
+  let width = 800;
+  let height = 600;
+  let groundWidth = 815;
+  let groundHeight = 50;
+  // grab HTML
   let heightRange = document.getElementById("heightRange");
   let heightVal = document.getElementById("heightVal");
-  let realHeight = 600 - heightRange.value;
+  let realHeight = height - heightRange.value;
   let massRange = document.getElementById("massRange");
   let massVal = document.getElementById("massVal");
   let realMass = massRange.value;
   // add bodies
-  let ground = Bodies.rectangle(395, 600, 815, 50, { isStatic: true });
-  let rockOptions = { density: 0.004 };
-  let rock = Bodies.polygon(170, realHeight, 8, realMass, rockOptions);
+  let ground = Bodies.rectangle(width / 2, height, groundWidth, groundHeight, {
+    isStatic: true,
+  });
+  let pizzaOptions = {
+    density: 0.004,
+  };
+  let pizza = Bodies.polygon(170, realHeight, 8, realMass, pizzaOptions);
   let anchor = { x: 170, y: realHeight };
   let elastic = Constraint.create({
     pointA: anchor,
-    bodyB: rock,
+    bodyB: pizza,
     length: 0.01,
     damping: 0.01,
     stiffness: 0.05,
     render: { strokeStyle: "gray", lineWidth: 2 },
   });
+  // adjust height
   heightRange.addEventListener("input", function () {
-    let height = parseFloat(heightRange.value);
-    anchor.y = height;
-    heightVal.innerHTML = `${height}`;
-    // Update the engine to apply the changes
+    let heightInput = parseFloat(heightRange.value);
+    realHeight = height - heightRange.value;
+    anchor.y = realHeight;
+    heightVal.innerHTML = `${heightInput}`;
     Engine.update(engine);
   });
+  // adjust mass
   massRange.addEventListener("input", function () {
     let massValue = parseFloat(massRange.value);
     realMass = massValue;
-    rock.mass = massValue;
+    pizza.mass = massValue;
     massVal.innerHTML = `${massValue}`;
-    rock = Bodies.polygon(170, realHeight, 7, massValue, rockOptions);
-    Composite.add(engine.world, rock);
-    elastic.bodyB = rock;
-    // Update the engine to apply the changes
+    pizza = Bodies.polygon(170, realHeight, 7, massValue, pizzaOptions);
+    Composite.add(engine.world, pizza);
+    elastic.bodyB = pizza;
     Engine.update(engine);
   });
-  let ground2 = Bodies.rectangle(610, 250, 200, 20, { isStatic: true });
-  let pyramid = Composites.pyramid(550, 0, 5, 10, 0, 0, function (x, y) {
-    return Bodies.rectangle(x, y, 25, 40);
-  });
-  //   add mouse control
+  // set pyramid
+  let ground2_x = Math.floor(Math.random() * (width - 500) + 500);
+  let ground2_y = Math.floor(Math.random() * (height - 100) + 100);
+  let ground2 = Bodies.rectangle(
+    ground2_x,
+    ground2_y,
+    groundWidth / 3,
+    groundHeight / 3,
+    { isStatic: true }
+  );
+  //   let pyramid = Composites.pyramid(ground2_x - 60, 0, 3, 6, 0, 0, function (x, y) {
+  //     return Bodies.rectangle(x, y, 25, 40, {label: "hitBlock"});
+  //   });
+  let pyramidInstance = new Pyramid(ground2_x);
+  let pyramid = pyramidInstance.body;
+  // add mouse control
   let mouse = Mouse.create(render.canvas),
     mouseConstraint = MouseConstraint.create(engine, {
       mouse: mouse,
@@ -99,16 +153,28 @@ function StartSlingshot() {
       },
     });
   Events.on(engine, "afterUpdate", function () {
+    let blocksOnGround = 0;
+    for (let body of pyramid.bodies) {
+      if (body.label === "hitBlock" && body.position.y > ground2.bounds.max.y) {
+        blocksOnGround++;
+      }
+    }
+
+    if (blocksOnGround >= pyramidInstance.blockCount) {
+      pyramidInstance.knockOver();
+    }
+
     if (
       mouseConstraint.mouse.button === -1 &&
-      (rock.position.x > 190 || rock.position.y < realHeight - 0.9 * realHeight)
+      (pizza.position.x > 190 ||
+        pizza.position.y < realHeight - 0.9 * realHeight)
     ) {
-      rock = Bodies.polygon(170, realHeight, 7, realMass, rockOptions);
-      Composite.add(engine.world, rock);
-      elastic.bodyB = rock;
+      pizza = Bodies.polygon(170, realHeight, 7, realMass, pizzaOptions);
+      Composite.add(engine.world, pizza);
+      elastic.bodyB = pizza;
     }
   });
-  Composite.add(engine.world, [ground, ground2, pyramid, rock, elastic]);
+  Composite.add(engine.world, [ground, ground2, pyramid, pizza, elastic]);
   Composite.add(engine.world, mouseConstraint);
   // keep the mouse in sync with rendering
   render.mouse = mouse;
