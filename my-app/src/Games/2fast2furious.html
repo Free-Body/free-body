@@ -16,7 +16,19 @@
     </style>
   </head>
   <body onload="init()">
-    <div id="areaToRender"></div>    
+    <div id="areaToRender"></div>
+    <div>
+      <label for="velocityInput">Velocity:</label>
+      <input
+        type="range"
+        id="velocityInput"
+        min="0"
+        max="10"
+        step="0.1"
+        value="5"
+      />
+      <span id="velocityOutput">5</span>
+    </div>
     <button onclick="carFunc()">Play Cars</button>
   </body>
 </html>
