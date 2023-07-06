@@ -3,14 +3,8 @@ import tugImage from "./images/tugofwar.png";
 
 const About = () => {
   return (
-    <div>
-      <div className="home-header">
-        <p id="line1">PHYSICS PROBLEMS CAN BE THE MOST DIFFICULT TO SOLVE</p>
-        <p id="line2">BUT THEY DON'T HAVE TO BE THE MOST BORING</p>
-      </div>
-      <div>
-        <img src={tugImage} alt="tug of war" id="tugimg" />
-      </div>
+    <div className="aboutContainer">
+      <img src={tugImage} alt="tug of war" id="tugimg" />
       <div class="aboutclass">
         {/* <h1 id="abouthead">About Us</h1> */}
         <p>

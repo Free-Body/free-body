@@ -1,16 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Boogaloo&display=swap");
 
+.appRoutesContainer {
+  display: flex;
+  flex-direction: column;
+}
+
 .navbar-container {
   background-color: transparent;
   display: flex;
   flex-direction: column;
   align-items: right;
-  width: 100%;
+  width: 20vw;
 }
 
 .logo {
-  width: 323px;
-  height: 323px;
+  width: 20vw;
+  height: 20vw;
   flex-shrink: 0;
 }
 
@@ -19,7 +24,6 @@
   display: flex;
   flex-direction: column;
   align-items: right;
-  width: 100%;
 }
 
 .nav-links {
@@ -35,7 +39,7 @@
 .nav-link {
   color: #fff;
   text-decoration: none;
-  font-size: 50px;
+  font-size: 25px;
   font-family: Boogaloo;
   font-style: normal;
   font-weight: 400;
@@ -45,19 +49,13 @@
 }
 
 .nav-link:hover {
-  display: flex;
-  width: 210.568px;
-  height: 61.783px;
-  transform: translate(10px, 0);
-  justify-content: center;
-  flex-direction: column;
-  justify-content: center;
-  flex-shrink: 0;
+  text-decoration: underline;
 }
+
 .home-header {
   color: #fff;
   text-decoration: none;
-  font-size: 50px;
+  font-size: 30px;
   font-family: Boogaloo;
   font-style: normal;
   font-weight: 400;
@@ -67,7 +65,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  transform: translate(150px, -650px);
+  width: 80vw;
 }
 
 #line1 {
@@ -80,6 +78,7 @@
 
 .home-pics {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   margin: 20px;
@@ -113,13 +112,14 @@
   flex-direction: column;
   align-items: center;
   margin: 20px;
-  transform: translate(145px, -650px);
 }
+
 .home-pic img {
   width: 100%;
   height: 110%;
   object-fit: cover;
 }
+
 .picture-tag {
   color: #004aad;
   text-decoration: none;
@@ -166,15 +166,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;  
   margin-bottom: 10px;
 }
 
-.home-picAL {
-}
-
-.home-pics {
+.grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+  margin-top: -35%;
+  z-index: 9999;
 }
 
 .person-card {
@@ -220,14 +221,21 @@
 .person-name:hover::after {
   transform: scaleX(1);
 }
+
+.teamContainer, .activityLandContainer { 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #meet {
   position: absolute;
-  top: 30%;
-  left: 46%;
+  top: 40%;
+  left: 50%;
   background-color: transparent;
   color: #fff;
   z-index: 9999;
-  font-size: 50px;
+  font-size: 33px;
   font-family: Boogaloo;
   font-style: normal;
   font-weight: 400;
@@ -237,9 +245,7 @@
 #backimg {
   width: 37%;
   height: auto;
-  margin-top: -77%;
-  margin-bottom: 1%;
-  margin-left: 41%;
+  z-index: 0;
 }
 
 .aboutclass {
@@ -250,19 +256,71 @@
   justify-content: center;
   flex-shrink: 0;
   color: #004aad;
-  font-size: 33px;
+  font-size: 30px;
   font-family: Boogaloo;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin-top: -42%;
-  margin-left: 20%;
+  text-align: center;
 }
 
 #tugimg {
   width: 50%;
   height: auto;
-  margin-top: -40%;
-  margin-bottom: 9%;
-  margin-left: 55%;
+}
+
+.aboutContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.pizzaToss {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #004aad;
+  font-size: 33px;
+  font-family: Boogaloo;
+  font-style: normal;
+  font-weight: 400;
+  font-size: large;
+}
+
+.appContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+/* for smaller screen sizes */
+
+@media screen and (max-width: 800px) {
+  .appContainer{
+    flex-direction: column;
+  }
+
+  .home-header {
+    font-size: medium;
+  }
+
+  p {
+    font-size: smaller;
+  }
+
+  .aboutclass p {
+    white-space: wrap;
+    width: 50%;
+    margin-left: 25%;
+  }
+
+  #meet {
+    position: absolute;
+    top: 70%;
+    left: 20%;
+  }
+
+  .grid {
+    margin-top: 0;
+  }
 }

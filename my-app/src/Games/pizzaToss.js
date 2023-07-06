@@ -7,7 +7,6 @@ let Engine = Matter.Engine,
   Composite = Matter.Composite,
   Composites = Matter.Composites,
   Constraint = Matter.Constraint,
-  Collision = Matter.Collision,
   Mouse = Matter.Mouse,
   MouseConstraint = Matter.MouseConstraint,
   Events = Matter.Events;
@@ -68,12 +67,12 @@ class Pyramid {
       const areaToRender = document.getElementById("areaToRender");
       areaToRender.style.opacity = 0.75;
       const h1 = document.createElement("h1");
-      h1.textContent = "YOU WIN!"
+      h1.textContent = "YOU WIN! Click the button to play again!"
       areaToRender.prepend(h1);
       setTimeout(function () {
         h1.remove()
         areaToRender.style.opacity = 1;
-      }, 5000);
+      }, 6000);
     }
   }
 }

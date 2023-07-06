@@ -7,7 +7,7 @@ const PizzaToss = () => {
         window.onload=init();
     }, [])
     return (
-    <div>
+    <div className="pizzaToss">
         <h2>Pizza Toss</h2>
         <h3>Looks like rats have taken over the kitchen! Toss them some pizzas to lure them out!</h3>
         <ol>Directions: 
