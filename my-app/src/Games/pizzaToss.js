@@ -27,9 +27,9 @@ export const init = function () {
     engine: engine,
     options: {
       width: 1000,
-      height: 600,
+      height: 570,
       pixelRatio: 1,
-      background: "#FAFAFA",
+      background: "https://sillyapron.files.wordpress.com/2014/09/kitchen062.jpg",
       wireframes: false,
     },
   });
@@ -55,8 +55,8 @@ class Pyramid {
       0,
       0,
       function (x, y) {
-        return Bodies.rectangle(x, y, 70, 100, { label: "hitBlock", 
-        // render: {sprite: {texture: "../../public/remy.png", xScale: 80/595, yScale: 100/858}}
+        return Bodies.rectangle(x, y, 70, 150, { label: "hitBlock", 
+        render: {sprite: {texture: "https://www.pngkit.com/png/detail/938-9388574_ratatouille-ratatouille-remy.png", xScale: 70/860, yScale: 150/1593}}
        });
       }
     );
@@ -83,10 +83,10 @@ export const StartSlingshot = function() {
   clearWorld();
 
   //constants
-  let width = 1000;
+  let width = 1600;
   let height = 600;
-  let groundWidth = 1000;
-  let groundHeight = 50;
+  let groundWidth = 1600;
+  let groundHeight = 100;
 
   // grab HTML
   let heightRange = document.getElementById("heightRange");
@@ -122,7 +122,7 @@ export const StartSlingshot = function() {
   });
 
   // set pyramid
-  let ground2_x = Math.floor(Math.random() * (width - 500) + 450);
+  let ground2_x = Math.floor(Math.random() * (1000 - 600) + 450);
   let ground2 = createGround2(groundWidth, groundHeight, height, ground2_x);
 
   let pyramidInstance = new Pyramid(ground2_x);
@@ -147,7 +147,8 @@ export const StartSlingshot = function() {
       mouseConstraint.mouse.button === -1 &&
       (pizza.position.x > 190 || pizza.position.y < realHeight - 0.9 * realHeight)
     ) {
-      pizza = createPizza(realHeight, realMass);
+      let massValue = massListener(pizza, realHeight, elastic);
+      pizza = createPizza(realHeight, massValue);
       Composite.add(engine.world, pizza);
       elastic.bodyB = pizza;
     }
@@ -159,7 +160,7 @@ export const StartSlingshot = function() {
 }
 
 function createPizza(realHeight, realMass) {
-  let pizzaOptions = { density: 0.004 };
+  let pizzaOptions = { density: 0.004, render: {sprite: {texture: "https://static.vecteezy.com/system/resources/previews/009/384/620/original/fresh-pizza-and-pizza-box-clipart-design-illustration-free-png.png", xScale: realMass/1000, yScale: realMass/900}}};
   let pizza = Bodies.polygon(170, realHeight, 8, realMass, pizzaOptions);
   return pizza;
 }
@@ -169,7 +170,7 @@ function createGround2(groundWidth, groundHeight, height, ground2_x) {
   let ground2 = Bodies.rectangle(
     ground2_x,
     ground2_y,
-    groundWidth / 2,
+    groundWidth / 4,
     groundHeight / 3,
     { isStatic: true }
   );
@@ -187,7 +188,7 @@ function heightListener(height, anchor) {
   Engine.update(engine);
 }
 
-function massListener(pizza, realHeight, elastic) {
+function massListener(pizza) {
   let massRange = document.getElementById("massRange");
   let massVal = document.getElementById("massVal");
   let massValue = parseFloat(massRange.value);
