@@ -33,19 +33,19 @@ function InteractiveImage() {
           />
           <area
             shape="rect"
-            coords="x710,y73,x914,y196"
+            coords="x274,y73,x914,y196"
             href="../features/HomePage/homePage"
             alt="Acceleration Game"
           />
           <area
             shape="rect"
-            coords="x256,y642,x93,y478"
+            coords="x256,y600,x93,y380"
             href="../features/HomePage/homePage"
             alt="Buoyancy Game"
           />
           <area
             shape="rect"
-            coords="x735,y532,x878,y670"
+            coords="x274,y532,x878,y400"
             href="../features/HomePage/homePage"
             alt="Circuitry Game"
           />
