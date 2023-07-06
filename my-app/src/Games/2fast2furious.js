@@ -59,6 +59,7 @@ function carFunc() {
       isStatic: true,
       angle: -Math.PI * 0.1,
       render: { fillStyle: "#060a19" },
+      label: "Left ramp",
     }),
 
     // Right ramp
@@ -66,12 +67,14 @@ function carFunc() {
       isStatic: true,
       angle: Math.PI * 0.1,
       render: { fillStyle: "#060a19" },
+      label: "Right ramp",
     }),
 
     // Gap
     Bodies.rectangle(400, 550, 100, 150, {
       isStatic: true,
       render: { fillStyle: "#FAFAFA" },
+      label: "Gap",
     }),
   ]);
 
@@ -89,27 +92,6 @@ function carFunc() {
 
   Body.translate(carBody, { x: 0, y: yPos });
 
-  // Create a constraint to restrict the car's movement on the left side
-  let leftWall = Bodies.rectangle(
-    -10,
-    render.bounds.height / 2,
-    20,
-    render.bounds.height,
-    {
-      isStatic: true,
-      render: { visible: false },
-    }
-  );
-
-  let constraint = Constraint.create({
-    bodyA: leftWall,
-    bodyB: carBody,
-    pointB: { x: -carBody.bounds.max.x, y: 0 },
-    stiffness: 1,
-  });
-
-  Composite.add(world, [leftWall, constraint]);
-
   // Add mouse control (optional)
   let mouse = Mouse.create(render.canvas),
     mouseConstraint = MouseConstraint.create(engine, {
@@ -126,6 +108,22 @@ function carFunc() {
 
   // Keep the mouse in sync with rendering
   render.mouse = mouse;
+
+  // Variable to track if the car is clicked
+  let carClicked = false;
+
+  // Add event listener to update the car's position when clicked
+  Events.on(mouseConstraint, "mousedown", function (event) {
+    let clickedBody = event.source.body;
+    carClicked = clickedBody === carBody;
+  });
+
+  Events.on(engine, "afterUpdate", function () {
+    if (carClicked) {
+      // Apply upward force to the car
+      Body.applyForce(carBody, carBody.position, { x: 0, y: -0.04 });
+    }
+  });
 
   // Fit the render viewport to the scene
   Render.lookAt(render, {
