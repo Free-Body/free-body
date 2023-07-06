@@ -10,10 +10,12 @@ import Acceleration from "../features/LearnAbout/acceleration";
 import Buoyancy from "../features/LearnAbout/buoyancy";
 import Circuitry from "../features/LearnAbout/circuits";
 import PizzaToss from "../Games/pizzaTossComponent";
+import Header from "../features/HomePage/header";
 
 const AppRoutes = () => {
   return (
-    <div>
+    <div className="appRoutesContainer">
+      <Header />
       <Routes>
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />

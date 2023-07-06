@@ -4,13 +4,7 @@ import "./howstyle.css";
 
 const How = () => {
   return (
-    <div>
-      <div>
-        <div className="home-header">
-          <p id="line1">PHYSICS PROBLEMS CAN BE THE MOST DIFFICULT TO SOLVE</p>
-          <p id="line2">BUT THEY DON'T HAVE TO BE THE MOST BORING</p>
-        </div>
-      </div>
+    <div className="howContainer">
       {/* <h1 id="how-head">How it Works</h1> */}
       <h2 id="how-header">Learn more about each of the following topics!</h2>
       <div className="howimages">

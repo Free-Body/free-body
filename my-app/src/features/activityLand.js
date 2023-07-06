@@ -3,11 +3,7 @@ import React from "react";
 //for now the images link to home page until we have game links
 function InteractiveImage() {
   return (
-    <div>
-      <div className="home-header">
-        <p id="line1">PHYSICS PROBLEMS CAN BE THE MOST DIFFICULT TO SOLVE</p>
-        <p id="line2">BUT THEY DON'T HAVE TO BE THE MOST BORING</p>
-      </div>
+    <div className="activityLandContainer">
       <div>
         <img
           src={require("./images/physicsuniversity.png")}
@@ -17,8 +13,6 @@ function InteractiveImage() {
             width: "65%",
             height: "auto",
             marginLeft: "26%",
-            // float: "right",
-            marginTop: "-55%",
             marginBottom: "2%",
             borderRadius: "177px",
             paddingRight: "45px",
@@ -28,25 +22,25 @@ function InteractiveImage() {
           <area
             shape="rect"
             coords="x274,y178,x74,y40"
-            href="../features/HomePage/homePage"
+            href="/pizzatoss"
             alt="Projectile Game"
           />
           <area
             shape="rect"
             coords="x274,y73,x914,y196"
-            href="../features/HomePage/homePage"
+            href="/acceleration"
             alt="Acceleration Game"
           />
           <area
             shape="rect"
-            coords="x256,y600,x93,y380"
-            href="../features/HomePage/homePage"
+            coords="x256,y400,x93,y300"
+            href="/buoyancy"
             alt="Buoyancy Game"
           />
           <area
             shape="rect"
-            coords="x274,y532,x878,y400"
-            href="../features/HomePage/homePage"
+            coords="x274,y400,x878,y300"
+            href="/circuitry"
             alt="Circuitry Game"
           />
         </map>

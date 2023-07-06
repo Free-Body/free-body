@@ -11,14 +11,10 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <div className="home-header">
-        <p id="line1">PHYSICS PROBLEMS CAN BE THE MOST DIFFICULT TO SOLVE</p>
-        <p id="line2">BUT THEY DON'T HAVE TO BE THE MOST BORING</p>
-      </div>
+    <div className="teamContainer">
       <p id="meet">Meet our team on LinkedIn!</p>
       <img src={backImage} alt="background" id="backimg" />
-      <div className="home-pics">
+      <div className="grid">
         <div
           className="person-card"
           id="charlotte"

@@ -8,10 +8,6 @@ import meetTheTeamImage from "../images/meet-the-team.png";
 const Home = () => {
   return (
     <div className="home-container">
-      <div className="home-header">
-        <p id="line1">PHYSICS PROBLEMS CAN BE THE MOST DIFFICULT TO SOLVE</p>
-        <p id="line2">BUT THEY DON'T HAVE TO BE THE MOST BORING</p>
-      </div>
       <div className="home-pics">
         <div className="row">
           <div className="home-pic white-bg">
