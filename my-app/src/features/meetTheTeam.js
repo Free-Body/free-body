@@ -3,6 +3,7 @@ import charlotteImage from "./images/charlotte.png";
 import jessicaImage from "./images/jessica.png";
 import ashleyImage from "./images/ashley.png";
 import carinaImage from "./images/carina.png";
+import backImage from "./images/earth.png";
 
 const Home = () => {
   const handleLinkClick = (url) => {
@@ -11,25 +12,51 @@ const Home = () => {
 
   return (
     <div>
-      <div className='header'>
-        <p id='line1'>Meet The Team</p>
-        <p id='line2'>click on the image to connect linkedin</p>
+      <div className="home-header">
+        <p id="line1">PHYSICS PROBLEMS CAN BE THE MOST DIFFICULT TO SOLVE</p>
+        <p id="line2">BUT THEY DON'T HAVE TO BE THE MOST BORING</p>
       </div>
-      <div className='home-pics'>
-        <div className="person-card" onClick={() => handleLinkClick("https://www.linkedin.com/in/charlotte-currey/")}>
-          <img src={charlotteImage} alt='Charlotte' id='charlotte.png' />
+      <p id="meet">Meet our team on LinkedIn!</p>
+      <img src={backImage} alt="background" id="backimg" />
+      <div className="home-pics">
+        <div
+          className="person-card"
+          id="charlotte"
+          onClick={() =>
+            handleLinkClick("https://www.linkedin.com/in/charlotte-currey/")
+          }
+        >
+          <img src={charlotteImage} alt="Charlotte" id="charlotte.png" />
           <p className="person-name">Charlotte Currey</p>
         </div>
-        <div className="person-card" onClick={() => handleLinkClick("https://www.linkedin.com/in/j-rogado/")}>
-          <img src={jessicaImage} alt='Jessica' id='jessica.png' />
+        <div
+          className="person-card"
+          id="jessica"
+          onClick={() =>
+            handleLinkClick("https://www.linkedin.com/in/j-rogado/")
+          }
+        >
+          <img src={jessicaImage} alt="Jessica" id="jessica.png" />
           <p className="person-name">Jessica Rogado</p>
         </div>
-        <div className="person-card" onClick={() => handleLinkClick("https://www.linkedin.com/in/ashleynware/")}>
-          <img src={ashleyImage} alt='Ashley' id='ashley.png' />
+        <div
+          className="person-card"
+          id="ashley"
+          onClick={() =>
+            handleLinkClick("https://www.linkedin.com/in/ashleynware/")
+          }
+        >
+          <img src={ashleyImage} alt="Ashley" id="ashley.png" />
           <p className="person-name">Ashley Ware</p>
         </div>
-        <div className="person-card" onClick={() => handleLinkClick("https://www.linkedin.com/in/carina-carlos/")}>
-          <img src={carinaImage} alt='Carina' id='carina.png' />
+        <div
+          className="person-card"
+          id="carina"
+          onClick={() =>
+            handleLinkClick("https://www.linkedin.com/in/carina-carlos/")
+          }
+        >
+          <img src={carinaImage} alt="Carina" id="carina.png" />
           <p className="person-name">Carina Carlos</p>
         </div>
       </div>
