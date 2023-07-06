@@ -116,6 +116,11 @@ function carFunc() {
   Events.on(mouseConstraint, "mousedown", function (event) {
     let clickedBody = event.source.body;
     carClicked = clickedBody === carBody;
+
+    if (carClicked) {
+      // Apply upward force to the car
+      Body.applyForce(carBody, carBody.position, { x: 0, y: -0.04 });
+    }
   });
 
   Events.on(engine, "afterUpdate", function () {
@@ -215,3 +220,9 @@ function car(xx, yy, width, height, wheelSize) {
 
   return car;
 }
+
+// Call the init() function to initialize the engine and renderer
+init();
+
+// Call the carFunc() function to create and start the car
+carFunc();
