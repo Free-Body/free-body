@@ -29,8 +29,11 @@ const PizzaToss = () => {
 
             <label htmlFor="massRange">Mass: <span id="massVal">50</span> grams</label>
             <input type="range" id="massRange" min="10" max="50" step="10"  defaultValue="25"/>
+
+            <label htmlFor="gravityRange">Gravity: <span id="gravityVal">0.001 </span> m/s2 </label>
+            <input type="range" id="gravityRange" min="0.0005" max="0.003" step="0.0005"  defaultValue="0.001"/>
         </div>
-        <div>
+        <div id="playBox">
             <button onClick={StartSlingshot}>Pizza Toss</button>
         </div>
     </div>)
