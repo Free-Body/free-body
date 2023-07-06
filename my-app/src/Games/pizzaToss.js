@@ -187,7 +187,7 @@ function heightListener(height, anchor) {
   Engine.update(engine);
 }
 
-function massListener(pizza, realHeight, elastic) {
+function massListener(pizza) {
   let massRange = document.getElementById("massRange");
   let massVal = document.getElementById("massVal");
   let massValue = parseFloat(massRange.value);
