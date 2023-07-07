@@ -4,7 +4,7 @@ import React from "react";
 function InteractiveImage() {
   return (
     <div className="activityLandContainer">
-      <div>
+      <div id="activityLandDiv">
         <img
           src={require("./images/physicsuniversity.png")}
           alt="Interactive"
@@ -12,10 +12,10 @@ function InteractiveImage() {
           style={{
             width: "65%",
             height: "auto",
-            marginLeft: "26%",
             marginBottom: "2%",
             borderRadius: "177px",
-            paddingRight: "45px",
+            paddingRight: "50px",
+            paddingLeft: "50px",
           }}
         />
         <map name="image-map">
@@ -36,12 +36,6 @@ function InteractiveImage() {
             coords="x256,y400,x93,y300"
             href="/buoyancy"
             alt="Buoyancy Game"
-          />
-          <area
-            shape="rect"
-            coords="x274,y400,x878,y300"
-            href="/circuitry"
-            alt="Circuitry Game"
           />
         </map>
       </div>

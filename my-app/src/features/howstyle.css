@@ -45,28 +45,12 @@
   text-align: center;
 }
 
-#acc-head {
-  position: absolute;
-  top: 90px;
-  left: 50%;
-  transform: translateX(-50%);
+.head {
   color: #fff;
-  text-decoration: none;
-  font-size: 50px;
-  font-family: Boogaloo;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  margin-bottom: 10px;
-  white-space: nowrap;
 }
 
-#acc-body {
-  position: absolute;
-  top: 200px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #fff;
+.howitworks {
+  color: #004aad;
   text-decoration: none;
   font-size: 20px;
   font-family: Boogaloo;
@@ -74,97 +58,10 @@
   font-weight: 400;
   line-height: normal;
   margin-bottom: 10px;
+  width: 50vw;
+  text-align: justify;
 }
 
-#proj-head {
-  position: absolute;
-  top: 90px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #fff;
-  text-decoration: none;
-  font-size: 50px;
-  font-family: Boogaloo;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  margin-bottom: 10px;
-  white-space: nowrap;
-}
-
-#proj-body {
-  position: absolute;
-  top: 200px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #fff;
-  text-decoration: none;
-  font-size: 20px;
-  font-family: Boogaloo;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  margin-bottom: 10px;
-}
-
-#buoy-head {
-  position: absolute;
-  top: 90px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #fff;
-  text-decoration: none;
-  font-size: 50px;
-  font-family: Boogaloo;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  margin-bottom: 10px;
-  white-space: nowrap;
-}
-
-#buoy-body {
-  position: absolute;
-  top: 200px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #fff;
-  text-decoration: none;
-  font-size: 20px;
-  font-family: Boogaloo;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  margin-bottom: 10px;
-}
-
-#circ-head {
-  position: absolute;
-  top: 90px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #fff;
-  text-decoration: none;
-  font-size: 50px;
-  font-family: Boogaloo;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  margin-bottom: 10px;
-  white-space: nowrap;
-}
-
-#circ-body {
-  position: absolute;
-  top: 200px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #fff;
-  text-decoration: none;
-  font-size: 20px;
-  font-family: Boogaloo;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  margin-bottom: 10px;
+.howitworks img {
+  width: 100%;
 }

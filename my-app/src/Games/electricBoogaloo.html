@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Physics Engine for JavaScript - Matter.js - CodeBrainer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
+    <script src="./electricBoogaloo.js"></script>
+    <style>
+      canvas {
+        position: relative;
+        width: 600px;
+        height: 500px;
+        background-color: white;
+      }
+    </style>
+  </head>
+  <body onload="init()">
+    <div id="areaToRender"></div>
+    <div>
+      <div>
+        <button onclick="StartCircuit()">Start</button>
+      </div>
+    </div>
+  </body>
+</html>

@@ -3,65 +3,12 @@ import "../howstyle.css";
 
 const Acceleration = () => {
   return (
-    <div>
-      <h1 id="acc-head">Learn about Acceleration</h1>
-      <p id="acc-body">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Auctor neque vitae
-        tempus quam pellentesque nec. Placerat orci nulla pellentesque
-        dignissim. Ut etiam sit amet nisl purus in. Velit scelerisque in dictum
-        non consectetur a erat. Vulputate sapien nec sagittis aliquam. Enim
-        facilisis gravida neque convallis a cras semper auctor. Urna condimentum
-        mattis pellentesque id nibh tortor id aliquet lectus. Malesuada fames ac
-        turpis egestas maecenas. A diam sollicitudin tempor id eu. Mus mauris
-        vitae ultricies leo integer malesuada nunc vel. Habitasse platea
-        dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Tincidunt
-        augue interdum velit euismod in pellentesque massa placerat. Diam in
-        arcu cursus euismod. Sem fringilla ut morbi tincidunt augue interdum.
-        Elit pellentesque habitant morbi tristique senectus et netus et. Risus
-        pretium quam vulputate dignissim suspendisse. Aliquet eget sit amet
-        tellus cras adipiscing enim eu. Ultrices mi tempus imperdiet nulla
-        malesuada. Id diam maecenas ultricies mi eget mauris pharetra et
-        ultrices. Ultricies lacus sed turpis tincidunt id aliquet risus. Sem
-        nulla pharetra diam sit. Eu consequat ac felis donec et odio. Purus sit
-        amet luctus venenatis lectus. Et malesuada fames ac turpis egestas sed.
-        At erat pellentesque adipiscing commodo elit. Mattis aliquam faucibus
-        purus in massa tempor nec. Vivamus at augue eget arcu. Feugiat pretium
-        nibh ipsum consequat. Blandit massa enim nec dui nunc. Condimentum
-        lacinia quis vel eros donec ac odio tempor. Pharetra diam sit amet nisl
-        suscipit adipiscing bibendum est ultricies. Tincidunt praesent semper
-        feugiat nibh sed pulvinar proin gravida. Ut morbi tincidunt augue
-        interdum velit. Nunc congue nisi vitae suscipit. Dui vivamus arcu felis
-        bibendum ut tristique et egestas. Sit amet nulla facilisi morbi tempus.
-        Non pulvinar neque laoreet suspendisse. Euismod lacinia at quis risus
-        sed vulputate odio ut. Dolor sit amet consectetur adipiscing elit. Enim
-        tortor at auctor urna nunc id cursus metus aliquam. Nunc id cursus metus
-        aliquam eleifend mi. Suscipit tellus mauris a diam maecenas. Elementum
-        integer enim neque volutpat. Eget velit aliquet sagittis id consectetur
-        purus. Libero justo laoreet sit amet cursus sit amet dictum sit. Tempus
-        iaculis urna id volutpat lacus laoreet. Egestas diam in arcu cursus
-        euismod. Malesuada fames ac turpis egestas integer. Ipsum nunc aliquet
-        bibendum enim facilisis gravida neque. Est lorem ipsum dolor sit amet
-        consectetur. Et magnis dis parturient montes nascetur ridiculus mus
-        mauris. Faucibus turpis in eu mi. Id consectetur purus ut faucibus
-        pulvinar elementum integer enim neque. Sit amet purus gravida quis
-        blandit. Velit ut tortor pretium viverra. Quam pellentesque nec nam
-        aliquam sem et tortor consequat id. Vulputate odio ut enim blandit. Dui
-        nunc mattis enim ut tellus elementum sagittis vitae. Morbi blandit
-        cursus risus at ultrices. Amet nulla facilisi morbi tempus iaculis urna
-        id. Interdum varius sit amet mattis. Eget nulla facilisi etiam dignissim
-        diam quis. Eget nulla facilisi etiam dignissim diam quis enim lobortis.
-        Lorem sed risus ultricies tristique nulla aliquet enim tortor. Gravida
-        rutrum quisque non tellus orci. Habitant morbi tristique senectus et
-        netus. Tortor pretium viverra suspendisse potenti nullam ac tortor.
-        Morbi tristique senectus et netus et malesuada fames. A lacus vestibulum
-        sed arcu non. Amet facilisis magna etiam tempor orci eu lobortis
-        elementum nibh. Et ultrices neque ornare aenean euismod elementum nisi.
-        Fringilla urna porttitor rhoncus dolor purus non enim. Tincidunt arcu
-        non sodales neque sodales. Pharetra diam sit amet nisl suscipit
-        adipiscing. Pellentesque dignissim enim sit amet venenatis urna cursus
-        eget nunc.
-      </p>
+    <div class="howitworks">
+      <h1 className="head">Learn about Acceleration on Ramps</h1>
+      <p>Ramps, also called inclined planes, are a common way to illustrate kinematics. These simple machines are an uneven surface in which one side of the plane is higher in the air than the other. When objects are on a ramp, the force of gravity is only a fraction of what it normally is because the object is at an angle to the surface of the earth. Using geometry, we can determine that the fraction of gravity acting on the object would be mFgsinΘ, where m is the mass of the object, Fg is the acceleration due to gravity, and Θ is the angle of the incline. In order for an object to move up a ramp, it must overcome the downward force of gravity. </p>
+      <img alt="ramp fbd" src={require("../images/fbd.png")}/> 
+      <a href="https://www.dummies.com/article/academics-the-arts/science/physics/friction-on-inclined-surfaces-in-physics-problems-141159/">Source</a>
+      <p> Now imagine a stunt car driver wants to drive up a ramp. If they want to go up the ramp, they need the car to have enough acceleration that its force up the ramp, F=ma, is greater than the force down the ramp, mFgsinΘ. Furthermore, in order for the stunt driver to clear a gap between two ramps, the driver must go fast enough to not only go up the ramp, but also have enough velocity at the end of the first ramp to go high enough and far enough to clear the second ramp. At the gap where the car is seemingly floating in the air, the car would be moving like a projectile! Acceleration will not help once the car is “launched” in the air because there is no ground for the car to accelerate on. </p>
     </div>
   );
 };
