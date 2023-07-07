@@ -11,6 +11,9 @@ import Buoyancy from "../features/LearnAbout/buoyancy";
 import PizzaToss from "../Games/pizzaTossComponent";
 import Header from "../features/HomePage/header";
 
+
+import PizzaChallenge from "../Games/pizzaChallengeComponent";
+
 const AppRoutes = () => {
   return (
     <div className="appRoutesContainer">
@@ -28,6 +31,8 @@ const AppRoutes = () => {
         <Route path="/buoyancy" element={<Buoyancy />} />
 
         <Route path="/pizzatoss" element={<PizzaToss />} />
+
+        <Route path="/pizzachallenge" element={<PizzaChallenge/>} />
       </Routes>
     </div>
   );
