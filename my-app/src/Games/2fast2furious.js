@@ -85,23 +85,6 @@ function carFunc() {
   // Add the car body to the world
   Composite.add(world, carBody);
 
-  // Add mouse control (optional)
-  let mouse = Mouse.create(render.canvas),
-    mouseConstraint = MouseConstraint.create(engine, {
-      mouse: mouse,
-      constraint: {
-        stiffness: 0.2,
-        render: {
-          visible: false,
-        },
-      },
-    });
-
-  Composite.add(world, mouseConstraint);
-
-  // Keep the mouse in sync with rendering
-  render.mouse = mouse;
-
   // Variable to track if the car is clicked
   let carClicked = false;
 
@@ -114,20 +97,18 @@ function carFunc() {
   });
 
   // Add event listener to update the car's position when clicked
-  Events.on(mouseConstraint, "mousedown", function (event) {
-    let clickedBody = event.source.body;
-    carClicked = clickedBody === carBody;
-
+  Events.on(engine, "beforeUpdate", function () {
     if (carClicked) {
       // Get the desired velocity from the input element
       let velocity = parseFloat(velocityInput.value);
 
-      // Calculate the force based on the desired velocity and car mass
-      let mass = carBody.mass;
-      let forceMagnitude = mass * velocity;
+      // Calculate the speed based on the desired velocity
+      let speed = velocity * 1000; // Convert m/s to pixels/s
 
-      // Apply upward force to the car
-      Body.applyForce(carBody, carBody.position, { x: 0, y: -forceMagnitude });
+      // Set the car's velocity
+      Body.setVelocity(carBody, { x: 0, y: -speed });
+
+      carClicked = false; // Reset the carClicked flag
     }
   });
 
@@ -146,10 +127,19 @@ function carFunc() {
 
   Composite.add(world, boundaryLeft);
 
+  //   let boundaryConstraint = Constraint.create({
+  //     bodyA: carBody,
+  //     bodyB: boundaryLeft,
+  //     pointA: { x: -carBody.bounds.min.x, y: 0 },
+  //     pointB: { x: -boundaryThickness / 2, y: 0 },
+  //     stiffness: 1,
+  //     length: 0,
+  //   });
+
   let boundaryConstraint = Constraint.create({
     bodyA: carBody,
-    bodyB: boundaryLeft,
     pointA: { x: -carBody.bounds.min.x, y: 0 },
+    bodyB: boundaryLeft,
     pointB: { x: -boundaryThickness / 2, y: 0 },
     stiffness: 1,
     length: 0,
