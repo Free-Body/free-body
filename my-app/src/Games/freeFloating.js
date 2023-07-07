@@ -1,166 +1,100 @@
 import React, { useEffect, useRef } from "react";
 import p2 from "p2";
 
-/* eslint-disable */
-
 const BuoyancySimulation = () => {
   const objectContainerRef = useRef();
   const addObjectButtonRef = useRef();
   const resetButtonRef = useRef();
 
   useEffect(() => {
-    let app = new p2.WebGLRenderer(() => {
-      let world = new p2.World({
+    const objectContainer = objectContainerRef.current;
+    const addObjectButton = addObjectButtonRef.current;
+    const resetButton = resetButtonRef.current;
+
+    addObjectButton.addEventListener("click", createObject);
+    resetButton.addEventListener("click", resetObjects);
+
+    let world;
+    let plane;
+
+    function initializeSimulation() {
+      world = new p2.World({
         gravity: [0, -10],
       });
 
-      this.setWorld(world);
-
-      let planeShape = new p2.Plane();
-      let plane = new p2.Body({
+      plane = new p2.Body({
         position: [0, 0],
         collisionResponse: false,
       });
+      const planeShape = new p2.Plane();
       plane.addShape(planeShape);
       world.addBody(plane);
 
-      let objects = [];
+      createObject();
+      animate();
+    }
 
-      let objectContainer = objectContainerRef.current;
-      let addObjectButton = addObjectButtonRef.current;
-      let resetButton = resetButtonRef.current;
+    function createObject() {
+      const objectElement = document.createElement("div");
+      objectElement.classList.add("object-container");
 
-      addObjectButton.addEventListener("click", () => {
-        createObject();
+      const massSlider = document.createElement("input");
+      massSlider.type = "range";
+      massSlider.classList.add("massSlider");
+      massSlider.min = "0.1";
+      massSlider.max = "100";
+      massSlider.step = "0.1";
+      massSlider.value = "1";
+
+      const massValue = document.createElement("span");
+      massValue.classList.add("massValue");
+      massValue.textContent = "1";
+
+      const massUnit = document.createElement("span");
+      massUnit.classList.add("massUnit");
+      massUnit.textContent = "kg";
+
+      objectElement.appendChild(massSlider);
+      objectElement.appendChild(massValue);
+      objectElement.appendChild(massUnit);
+      objectContainer.appendChild(objectElement);
+
+      const object = new p2.Body({
+        mass: parseFloat(massSlider.value),
+        position: [0, 2],
+        angularVelocity: 0.5,
       });
+      object.addShape(new p2.Circle({ radius: 0.5 }), [0.5, 0], 0);
+      object.addShape(new p2.Circle({ radius: 0.5 }), [-0.5, 0], 0);
+      world.addBody(object);
+    }
 
-      resetButton.addEventListener("click", () => {
-        objectContainer.innerHTML = "";
+    function resetObjects() {
+      objectContainer.innerHTML = "";
+      world.bodies.forEach((body) => world.removeBody(body));
+    }
 
-        objects.forEach((object) => {
-          world.removeBody(object.body);
-        });
+    function animate() {
+      world.step(1 / 60);
 
-        objects = [];
-      });
+      // Update the objects' positions
+      for (let i = 0; i < world.bodies.length; i++) {
+        const body = world.bodies[i];
+        if (body.shapes.length === 0) continue;
 
-      function createObject() {
-        let objectElement = document.createElement("div");
-        objectElement.classList.add("object-container");
+        const objectElement = objectContainer.children[i];
+        const position = body.position;
+        const angle = body.angle;
 
-        let massSlider = document.createElement("input");
-        massSlider.type = "range";
-        massSlider.classList.add("massSlider");
-        massSlider.min = "0.1";
-        massSlider.max = "100";
-        massSlider.step = "0.1";
-        massSlider.value = "1";
-
-        let massValue = document.createElement("span");
-        massValue.classList.add("massValue");
-        massValue.textContent = "1";
-
-        let massUnit = document.createElement("span");
-        massUnit.classList.add("massUnit");
-        massUnit.textContent = "kg";
-
-        objectElement.appendChild(massSlider);
-        objectElement.appendChild(massValue);
-        objectElement.appendChild(massUnit);
-
-        objectContainer.appendChild(objectElement);
-
-        let object = new p2.Body({
-          mass: parseFloat(massSlider.value),
-          position: [0, 2],
-          angularVelocity: 0.5,
-        });
-        object.addShape(new p2.Circle({ radius: 0.5 }), [0.5, 0], 0);
-        object.addShape(new p2.Circle({ radius: 0.5 }), [-0.5, 0], 0);
-        world.addBody(object);
-
-        objects.push({
-          body: object,
-          massSlider: massSlider,
-          massValue: massValue,
-        });
-
-        // Update masses on slider change
-        massSlider.addEventListener("input", () => {
-          object.mass = parseFloat(massSlider.value);
-          massValue.textContent = massSlider.value;
-        });
+        objectElement.style.transform = `translate(${position[0] * 100}px, ${
+          -position[1] * 100
+        }px) rotate(${angle}rad)`;
       }
 
-      createObject(); // Create initial object
+      requestAnimationFrame(animate);
+    }
 
-      // Add forces every step
-      world.on("postStep", () => {
-        for (let i = 0; i < objects.length; i++) {
-          let obj = objects[i];
-          applyAABBBuoyancyForces(obj.body, plane.position, k, c);
-        }
-      });
-
-      let shapePosition = [0, 0];
-      let centerOfBouyancy = [0, 0];
-      let liftForce = [0, 0];
-      let viscousForce = [0, 0];
-      let shapeAngle = 0;
-      let k = 100; // up force per submerged "volume"
-      let c = 0.8; // viscosity
-      let v = [0, 0];
-      let aabb = new p2.AABB();
-
-      function applyAABBBuoyancyForces(body, planePosition, k, c) {
-        for (let i = 0; i < body.shapes.length; i++) {
-          let shape = body.shapes[i];
-
-          // Get shape world transform
-          body.vectorToWorldFrame(shapePosition, shape.position);
-          p2.vec2.add(shapePosition, shapePosition, body.position);
-          shapeAngle = shape.angle + body.angle;
-
-          // Get shape AABB
-          shape.computeAABB(aabb, shapePosition, shapeAngle);
-
-          let areaUnderWater;
-          if (aabb.upperBound[1] < planePosition[1]) {
-            // Fully submerged
-            p2.vec2.copy(centerOfBouyancy, shapePosition);
-            areaUnderWater = shape.area;
-          } else if (aabb.lowerBound[1] < planePosition[1]) {
-            // Partially submerged
-            let width = aabb.upperBound[0] - aabb.lowerBound[0];
-            let height = 0 - aabb.lowerBound[1];
-            areaUnderWater = width * height;
-            p2.vec2.set(
-              centerOfBouyancy,
-              aabb.lowerBound[0] + width / 2,
-              aabb.lowerBound[1] + height / 2
-            );
-          } else {
-            continue;
-          }
-
-          // Compute lift force
-          p2.vec2.subtract(liftForce, planePosition, centerOfBouyancy);
-          p2.vec2.scale(liftForce, liftForce, areaUnderWater * k);
-          liftForce[0] = 0;
-
-          // Make center of buoyancy relative to the body
-          p2.vec2.subtract(centerOfBouyancy, centerOfBouyancy, body.position);
-
-          // Viscous force
-          body.getVelocityAtPoint(v, centerOfBouyancy);
-          p2.vec2.scale(viscousForce, v, -c);
-
-          // Apply forces
-          body.applyForce(viscousForce, centerOfBouyancy);
-          body.applyForce(liftForce, centerOfBouyancy);
-        }
-      }
-    });
+    initializeSimulation();
   }, []);
 
   return (
