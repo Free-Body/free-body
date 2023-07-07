@@ -113,78 +113,36 @@ function carFunc() {
     }),
   ]);
 
+  let velocityInput = document.getElementById("velocityInput");
+  let velocityValue = document.getElementById("velocityValue");
+  let velocity; 
+
+  velocityInput.addEventListener("input", function () {
+    velocity = parseFloat(velocityInput.value);
+    velocityValue.textContent = velocity + " m/s";
+  });
+
+  velocity = parseFloat(velocityInput.value);
   // See car function defined later in this file
   let scale = 0.9;
-  let v= 60;
-  let carBody = car(60, 570, 150 * scale, 30 * scale, 30 * scale, v); // Adjust the position of the car as needed
+  let carBody = car(60, 570, 150 * scale, 30 * scale, 30 * scale, velocity); // Adjust the position of the car as needed
 
   // Add the car body to the world
   Composite.add(world, carBody);
 
-  // Variable to track if the car is clicked
-  let carClicked = false;
+  let boundaryWidth = 20; // Adjust the width as needed
+  let boundaryHeight = render.options.height; // Use the height of the render canvas
+  let boundaryThickness = 40; // Adjust the thickness as needed
 
-  let velocityInput = document.getElementById("velocityInput");
-  let velocityValue = document.getElementById("velocityValue");
+  let boundaryLeft = Bodies.rectangle(
+    -boundaryThickness / 2,
+    boundaryHeight / 2 + 40, // Adjust the drop point by modifying the constant value
+    boundaryThickness,
+    boundaryHeight + 80, // Adjust the height by modifying the constant value
+    { isStatic: true }
+  );
 
-  velocityInput.addEventListener("input", function () {
-    let velocity = parseFloat(velocityInput.value);
-    velocityValue.textContent = velocity + " m/s";
-  });
-
-  let velocity = parseFloat(velocityInput.value);
-
-  // Add event listener to update the car's position when clicked
-  // Events.on(carBody, "afterUpdate", function () {
-  //   console.log('click')
-  //   if (carClicked === false) {
-  //     // Get the desired velocity from the input element
-  //     let velocity = parseFloat(velocityInput.value);
-
-  //     // Calculate the speed based on the desired velocity
-  //     let speed = velocity * 1000; // Convert m/s to pixels/s
-
-  //     // Set the car's velocity
-  //     Body.setVelocity(carBody, { x: 0, y: -speed });
-
-  //     carClicked = true; // Reset the carClicked flag
-  //   }
-  // });
-
-  // Apply boundary constraint to the car body
-  // let boundaryWidth = 20; // Adjust the width as needed
-  // let boundaryHeight = render.options.height; // Use the height of the render canvas
-  // let boundaryThickness = 40; // Adjust the thickness as needed
-
-  // let boundaryLeft = Bodies.rectangle(
-  //   -boundaryThickness / 2,
-  //   boundaryHeight / 2 + 40, // Adjust the drop point by modifying the constant value
-  //   boundaryThickness,
-  //   boundaryHeight + 80, // Adjust the height by modifying the constant value
-  //   { isStatic: true }
-  // );
-
-  // Composite.add(world, boundaryLeft);
-
-  //   let boundaryConstraint = Constraint.create({
-  //     bodyA: carBody,
-  //     bodyB: boundaryLeft,
-  //     pointA: { x: -carBody.bounds.min.x, y: 0 },
-  //     pointB: { x: -boundaryThickness / 2, y: 0 },
-  //     stiffness: 1,
-  //     length: 0,
-  //   });
-
-  // let boundaryConstraint = Constraint.create({
-  //   bodyA: carBody,
-  //   pointA: { x: -carBody.bounds.min.x, y: 0 },
-  //   bodyB: boundaryLeft,
-  //   pointB: { x: -boundaryThickness / 2, y: 0 },
-  //   stiffness: 1,
-  //   length: 0,
-  // });
-
-  // Composite.add(world, boundaryConstraint);
+  Composite.add(world, boundaryLeft);
 
   // Fit the render viewport to the scene
   Render.lookAt(render, {
