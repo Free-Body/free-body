@@ -17,17 +17,16 @@
   <body onload="init(); carFunc();">
     <div id="areaToRender"></div>
     <input
-    type="range"
-    id="velocityInput"
-    min="1"
-    max="81"
-    step="10"
-    value="0"
-    oninput="updateVelocity(this.value)"
-  />
+      type="range"
+      id="velocityInput"
+      min="1"
+      max="81"
+      step="10"
+      value="0"
+      oninput="updateVelocity(this.value)"
+    />
     <span id="velocityValue">0 m/s</span>
-    <button onclick="carFunc()">Play Cars!</button>
-    
+    <button id="playButton" onclick="carFunc()">Play Cars!</button>
   </body>
   <script src="2fast2furious.js"></script>
 </html>

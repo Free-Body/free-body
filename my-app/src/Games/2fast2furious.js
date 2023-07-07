@@ -115,7 +115,7 @@ function carFunc() {
 
   let velocityInput = document.getElementById("velocityInput");
   let velocityValue = document.getElementById("velocityValue");
-  let velocity; 
+  let velocity;
 
   velocityInput.addEventListener("input", function () {
     velocity = parseFloat(velocityInput.value);
@@ -130,26 +130,50 @@ function carFunc() {
   // Add the car body to the world
   Composite.add(world, carBody);
 
-  let boundaryWidth = 20; // Adjust the width as needed
-  let boundaryHeight = render.options.height; // Use the height of the render canvas
-  let boundaryThickness = 40; // Adjust the thickness as needed
+  let hasWon = false; // Track if the player has already won
 
-  let boundaryLeft = Bodies.rectangle(
-    -boundaryThickness / 2,
-    boundaryHeight / 2 + 40, // Adjust the drop point by modifying the constant value
-    boundaryThickness,
-    boundaryHeight + 80, // Adjust the height by modifying the constant value
-    { isStatic: true }
-  );
+  // Check car position on the right side of the canvas
+  function checkWinCondition() {
+    if (!hasWon && carBody.bodies[0].position.x > render.options.width) {
+      hasWon = true; // Set the flag to true to prevent further checks
+      displayWinMessage();
+      Events.off(engine, "beforeUpdate", checkWinCondition); // Stop checking the win condition
+    }
+  }
 
-  Composite.add(world, boundaryLeft);
+  // Display the win message
+  function displayWinMessage() {
+    let winMessage = document.createElement("div");
+    winMessage.textContent = "Congratulations! You won!";
+    winMessage.classList.add("win-message");
+    document.body.appendChild(winMessage);
+  }
 
-  // Fit the render viewport to the scene
-  Render.lookAt(render, {
-    min: { x: 0, y: 0 },
-    max: { x: 800, y: 600 },
-  });
+  // ... existing code ...
+
+  // Check the win condition continuously
+  Events.on(engine, "beforeUpdate", checkWinCondition);
 }
+
+let boundaryWidth = 20; // Adjust the width as needed
+let boundaryHeight = render.options.height; // Use the height of the render canvas
+let boundaryThickness = 40; // Adjust the thickness as needed
+
+let boundaryLeft = Bodies.rectangle(
+  -boundaryThickness / 2,
+  boundaryHeight / 2 + 40, // Adjust the drop point by modifying the constant value
+  boundaryThickness,
+  boundaryHeight + 80, // Adjust the height by modifying the constant value
+  { isStatic: true }
+);
+
+Composite.add(world, boundaryLeft);
+
+// Fit the render viewport to the scene
+Render.lookAt(render, {
+  min: { x: 0, y: 0 },
+  max: { x: 800, y: 600 },
+});
 
 /**
  * Creates a composite with simple car setup of bodies and constraints.
@@ -214,12 +238,11 @@ function car(xx, yy, width, height, wheelSize, v) {
     length: 0,
   });
 
-  Body.setVelocity(body, {x: v, y: 0});
-  Body.setVelocity(wheelA, {x: v, y: 0});
-  Body.setVelocity(wheelB, {x: v, y: 0});
+  Body.setVelocity(body, { x: v, y: 0 });
+  Body.setVelocity(wheelA, { x: v, y: 0 });
+  Body.setVelocity(wheelB, { x: v, y: 0 });
 
-
-  console.log(body)
+  console.log(body);
   Composite.addBody(car, body);
   Composite.addBody(car, wheelA);
   Composite.addBody(car, wheelB);
