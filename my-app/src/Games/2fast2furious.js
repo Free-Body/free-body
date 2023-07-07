@@ -1,4 +1,3 @@
-
 let Engine = Matter.Engine,
   Render = Matter.Render,
   Runner = Matter.Runner,
@@ -106,14 +105,29 @@ function carFunc() {
   // Variable to track if the car is clicked
   let carClicked = false;
 
+  let velocityInput = document.getElementById("velocityInput");
+  let velocityValue = document.getElementById("velocityValue");
+
+  velocityInput.addEventListener("input", function () {
+    let velocity = parseFloat(velocityInput.value);
+    velocityValue.textContent = velocity + " m/s";
+  });
+
   // Add event listener to update the car's position when clicked
   Events.on(mouseConstraint, "mousedown", function (event) {
     let clickedBody = event.source.body;
     carClicked = clickedBody === carBody;
 
     if (carClicked) {
+      // Get the desired velocity from the input element
+      let velocity = parseFloat(velocityInput.value);
+
+      // Calculate the force based on the desired velocity and car mass
+      let mass = carBody.mass;
+      let forceMagnitude = mass * velocity;
+
       // Apply upward force to the car
-      Body.applyForce(carBody, carBody.position, { x: 0, y: -0.04 });
+      Body.applyForce(carBody, carBody.position, { x: 0, y: -forceMagnitude });
     }
   });
 
@@ -181,52 +195,42 @@ function car(xx, yy, width, height, wheelSize) {
         radius: height * 0.5,
       },
       density: 0.0002,
-});
-let wheelA = Bodies.circle(
-xx + wheelAOffset,
-yy + wheelYOffset,
-wheelSize,
-{
-  collisionFilter: {
-    group: group,
-  },
-  friction: 0.8,
-}
-);
+    });
+  let wheelA = Bodies.circle(xx + wheelAOffset, yy + wheelYOffset, wheelSize, {
+    collisionFilter: {
+      group: group,
+    },
+    friction: 0.8,
+  });
 
-let wheelB = Bodies.circle(
-xx + wheelBOffset,
-yy + wheelYOffset,
-wheelSize,
-{
-  collisionFilter: {
-    group: group,
-  },
-  friction: 0.8,
-}
-);
+  let wheelB = Bodies.circle(xx + wheelBOffset, yy + wheelYOffset, wheelSize, {
+    collisionFilter: {
+      group: group,
+    },
+    friction: 0.8,
+  });
 
-let axelA = Constraint.create({
-bodyB: body,
-pointB: { x: wheelAOffset, y: wheelYOffset },
-bodyA: wheelA,
-stiffness: 1,
-length: 0,
-});
+  let axelA = Constraint.create({
+    bodyB: body,
+    pointB: { x: wheelAOffset, y: wheelYOffset },
+    bodyA: wheelA,
+    stiffness: 1,
+    length: 0,
+  });
 
-let axelB = Constraint.create({
-bodyB: body,
-pointB: { x: wheelBOffset, y: wheelYOffset },
-bodyA: wheelB,
-stiffness: 1,
-length: 0,
-});
+  let axelB = Constraint.create({
+    bodyB: body,
+    pointB: { x: wheelBOffset, y: wheelYOffset },
+    bodyA: wheelB,
+    stiffness: 1,
+    length: 0,
+  });
 
-Composite.addBody(car, body);
-Composite.addBody(car, wheelA);
-Composite.addBody(car, wheelB);
-Composite.addConstraint(car, axelA);
-Composite.addConstraint(car, axelB);
+  Composite.addBody(car, body);
+  Composite.addBody(car, wheelA);
+  Composite.addBody(car, wheelB);
+  Composite.addConstraint(car, axelA);
+  Composite.addConstraint(car, axelB);
 
-return car;
+  return car;
 }
