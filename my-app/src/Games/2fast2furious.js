@@ -85,22 +85,22 @@ function carFunc() {
   // Add the car body to the world
   Composite.add(world, carBody);
 
-  // Add mouse control (optional)
-  let mouse = Mouse.create(render.canvas),
-    mouseConstraint = MouseConstraint.create(engine, {
-      mouse: mouse,
-      constraint: {
-        stiffness: 0.2,
-        render: {
-          visible: false,
-        },
-      },
-    });
+  // // Add mouse control (optional)
+  // let mouse = Mouse.create(render.canvas),
+  //   mouseConstraint = MouseConstraint.create(engine, {
+  //     mouse: mouse,
+  //     constraint: {
+  //       stiffness: 0.2,
+  //       render: {
+  //         visible: false,
+  //       },
+  //     },
+  //   });
 
   Composite.add(world, mouseConstraint);
 
   // Keep the mouse in sync with rendering
-  render.mouse = mouse;
+  // render.mouse = mouse;
 
   // Variable to track if the car is clicked
   let carClicked = false;
