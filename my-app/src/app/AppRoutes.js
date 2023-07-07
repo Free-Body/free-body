@@ -10,6 +10,7 @@ import Acceleration from "../features/LearnAbout/acceleration";
 import Buoyancy from "../features/LearnAbout/buoyancy";
 import PizzaToss from "../Games/pizzaTossComponent";
 import Header from "../features/HomePage/header";
+import FastFurious from "../Games/2fast2furiousComponent.js";
 
 const AppRoutes = () => {
   return (
@@ -28,6 +29,7 @@ const AppRoutes = () => {
         <Route path="/buoyancy" element={<Buoyancy />} />
 
         <Route path="/pizzatoss" element={<PizzaToss />} />
+        <Route path="/2fast2furious" element={<FastFurious />} />
       </Routes>
     </div>
   );
