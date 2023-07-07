@@ -15,8 +15,8 @@ const How = () => {
               src={require("./images/projectiles.png")}
               alt="pizza"
             />
-          </Link>
           <h2>Projectile Motion</h2>
+          </Link>
         </div>
         <div className="image-wrapper">
           <Link to="/acceleration">
@@ -25,8 +25,8 @@ const How = () => {
               src={require("./images/acceleration.png")}
               alt="speedometer"
             />
+          <h2>Acceleration on a Ramp</h2>
           </Link>
-          <h2>Acceleration</h2>
         </div>
         <div className="image-wrapper">
           <Link to="/buoyancy">
@@ -35,18 +35,17 @@ const How = () => {
               src={require("./images/buoyancy.png")}
               alt="buoyancy"
             />
-          </Link>
           <h2>Buoyancy</h2>
+          </Link>
         </div>
         <div className="image-wrapper">
-          <Link to="/circuitry">
+          <Link to="/activityland">
             <img
-              id="circuitimage"
-              src={require("./images/circuitry.png")}
+              src={require("./images/physicsuniversity.png")}
               alt="a circuit"
             />
+          <h2>Play Games</h2>
           </Link>
-          <h2>Circuitry</h2>
         </div>
       </div>
     </div>

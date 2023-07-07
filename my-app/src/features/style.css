@@ -203,13 +203,9 @@
   margin-top: -2%;
   font-family: Boogaloo;
   font-style: normal;
-  /* font-weight: 400; */
-  /* line-height: normal; */
   margin-bottom: 10px;
   white-space: nowrap;
   text-shadow: 1px 1px 2px pink;
-}
-.person-name {
   position: relative;
   transition: color 0.3s ease-in-out;
 }
@@ -228,10 +224,12 @@
   align-items: center;
 }
 
+#activityLandDiv {
+  display: flex;
+  justify-content: center;
+}
+
 #meet {
-  position: absolute;
-  top: 40%;
-  left: 50%;
   background-color: transparent;
   color: #fff;
   z-index: 9999;
@@ -276,6 +274,11 @@
   align-items: center;
 }
 
+.activityLandContainer div {
+  display: flex;
+  justify-content: start;
+}
+
 .pizzaToss {
   display: flex;
   flex-direction: column;
@@ -296,12 +299,20 @@
 /* for smaller screen sizes */
 
 @media screen and (max-width: 800px) {
+  .appRoutesContainer {
+    align-items: center;
+  }
+
+  .navbar-container {
+    flex-direction: row;
+  }
+
   .appContainer{
     flex-direction: column;
   }
 
   .home-header {
-    font-size: medium;
+    white-space: wrap;
   }
 
   p {
@@ -314,13 +325,8 @@
     margin-left: 25%;
   }
 
-  #meet {
-    position: absolute;
-    top: 70%;
-    left: 20%;
-  }
-
   .grid {
-    margin-top: 0;
+    margin-top: 30px;
+    grid-template-columns: repeat(1, 1fr);
   }
 }

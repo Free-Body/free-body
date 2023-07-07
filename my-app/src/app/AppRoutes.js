@@ -8,7 +8,6 @@ import Activity from "../features/activityLand";
 import Projectiles from "../features/LearnAbout/projectiles";
 import Acceleration from "../features/LearnAbout/acceleration";
 import Buoyancy from "../features/LearnAbout/buoyancy";
-import Circuitry from "../features/LearnAbout/circuits";
 import PizzaToss from "../Games/pizzaTossComponent";
 import Header from "../features/HomePage/header";
 
@@ -17,6 +16,7 @@ const AppRoutes = () => {
     <div className="appRoutesContainer">
       <Header />
       <Routes>
+        <Route path="/*" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/meettheteam" element={<Meet />} />
@@ -26,7 +26,6 @@ const AppRoutes = () => {
         <Route path="/projectile-motion" element={<Projectiles />} />
         <Route path="/acceleration" element={<Acceleration />} />
         <Route path="/buoyancy" element={<Buoyancy />} />
-        <Route path="/circuitry" element={<Circuitry />} />
 
         <Route path="/pizzatoss" element={<PizzaToss />} />
       </Routes>
