@@ -1,3 +1,4 @@
+
 // velocity toggle
 
 let velocity = 0;
@@ -149,7 +150,6 @@ function carFunc() {
     document.body.appendChild(winMessage);
   }
 
-  // ... existing code ...
 
   // Check the win condition continuously
   Events.on(engine, "beforeUpdate", checkWinCondition);

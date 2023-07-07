@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Physics Engine for JavaScript - Matter.js - CodeBrainer</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.min.js"></script>
-    <script src="./pizzaToss.js"></script>
+    <script src="./electricBoogaloo.js"></script>
     <style>
       canvas {
         position: relative;
@@ -19,16 +19,8 @@
   <body onload="init()">
     <div id="areaToRender"></div>
     <div>
-      <label for="heightRange">Height: <span id="heightVal">210</span> m</label>
-
-      <input type="range" id="heightRange" min="130" max="400" step="1" defaultValue="210"/>
-
-      <label for="massRange">Mass: <span id="massVal">50</span> grams</label>
-      <input type="range" id="massRange" min="10" max="50" step="10" defaultValue="50"/>
-    </div>
-    <div>
       <div>
-        <button onclick="StartSlingshot()">Sling shot</button>
+        <button onclick="StartCircuit()">Start</button>
       </div>
     </div>
   </body>
