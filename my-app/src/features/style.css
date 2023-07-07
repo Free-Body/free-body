@@ -296,6 +296,19 @@
   flex-direction: row;
 }
 
+button {
+  background-color: #fff;
+  color: #004aad;
+  border-radius: 25px;
+  font-size: larger;
+  font-family: Boogaloo;
+  padding: 10px;
+}
+
+button:hover {
+  background-color: #ff94dd;
+}
+
 /* for smaller screen sizes */
 
 @media screen and (max-width: 800px) {
