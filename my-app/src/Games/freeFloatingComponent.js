@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import p2 from "p2";
-import "../../p2.min.js";
-import "../../p2.renderer.min.js";
+import "./p2.min.js";
+import "./p2.renderer.min.js";
 
 const FreeFloatingComponent = () => {
   useEffect(() => {
