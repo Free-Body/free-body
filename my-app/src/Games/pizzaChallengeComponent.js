@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Challenge } from "./pizzaToss";
 import { init } from "./pizzaToss";
+import { Link } from "react-router-dom";
 
 const PizzaChallenge = () => {
     useEffect(() => {
@@ -35,6 +36,7 @@ const PizzaChallenge = () => {
         </div>
         <div id="playBox">
             <button onClick={Challenge}>Pizza Toss</button>
+            <p>Too difficult? Try the standard mode <Link to="/pizzatoss">here!</Link></p>
         </div>
     </div>)
 }

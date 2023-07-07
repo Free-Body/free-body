@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { StartSlingshot } from "./pizzaToss";
 import { init } from "./pizzaToss";
+import { Link } from "react-router-dom";
 
 const PizzaToss = () => {
     useEffect(() => {
@@ -35,6 +36,7 @@ const PizzaToss = () => {
         </div>
         <div id="playBox">
             <button onClick={StartSlingshot}>Pizza Toss</button>
+            <p>Too easy? Checkout the challenge mode <Link to="/pizzachallenge">here!</Link></p>
         </div>
     </div>)
 }

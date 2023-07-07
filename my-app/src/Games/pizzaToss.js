@@ -249,7 +249,8 @@ export const Challenge = function () {
   let pizza = createPizza(realHeight, realMass);
 
 
-  Body.setVelocity(pizza, {x: xVelocity, y: -yVelocity})
+  Body.setVelocity(pizza, {x: xVelocity, y: -yVelocity});
+
   // adjust mass
   massRange.addEventListener("mouseup", function () {
     let massValue = massListener(pizza, realHeight);
@@ -260,14 +261,25 @@ export const Challenge = function () {
 
   // adjust gravity
   gravityRange.addEventListener("mouseup", function() {gravityListener()});
-  yvelocityRange.addEventListener("mouseup", function() {gravityListener()});
-  xvelocityRange.addEventListener("mouseup", function() {gravityListener()});
+
+  //adjust velocity
+  yvelocityRange.addEventListener("mouseup", function() {
+    yvelocityRange = document.getElementById("yvelocityRange");
+    let yVelocityVal = document.getElementById("yvelocityVal");
+    yVelocity = parseFloat(yvelocityRange.value);
+    yVelocityVal.innerHTML = `${yVelocity}`;
+  });
+
+  xvelocityRange.addEventListener("mouseup", function() {
+    xvelocityRange = document.getElementById("xvelocityRange");
+    let xVelocityVal = document.getElementById("xvelocityVal");
+    xVelocity = parseFloat(xvelocityRange.value);
+    xVelocityVal.innerHTML = `${xVelocity}`;
+  });
 
   // set pyramid
-  let ground2_x = Math.floor(Math.random() * (1000 - 600) + 450);
-  let ground2 = createGround2(groundWidth, groundHeight, height, ground2_x);
-
-  let pyramidInstance = new Pyramid(ground2_x);
+  let ground2 = Bodies.rectangle(610, 350, groundWidth / 4, groundHeight / 3, { isStatic: true });
+  let pyramidInstance = new Pyramid(610);
   let pyramid = pyramidInstance.body;
 
   // add mouse control
