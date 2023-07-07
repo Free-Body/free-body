@@ -1,3 +1,4 @@
+
 let Engine = Matter.Engine,
   Render = Matter.Render,
   Runner = Matter.Runner,
@@ -80,17 +81,10 @@ function carFunc() {
 
   // See car function defined later in this file
   let scale = 0.9;
-  let carBody = car(60, 100, 150 * scale, 30 * scale, 30 * scale); // Adjust the position of the car as needed
+  let carBody = car(60, 570, 150 * scale, 30 * scale, 30 * scale); // Adjust the position of the car as needed
 
   // Add the car body to the world
   Composite.add(world, carBody);
-
-  // Adjust the position of the car to match the bottom of the left ramp
-  let leftRamp = world.bodies.find((body) => body.label === "Left ramp");
-  let carBottom = carBody.position.y + carBody.bounds.max.y;
-  let yPos = leftRamp.bounds.min.y - carBottom;
-
-  Body.translate(carBody, { x: 0, y: yPos });
 
   // Add mouse control (optional)
   let mouse = Mouse.create(render.canvas),
@@ -123,30 +117,37 @@ function carFunc() {
     }
   });
 
-  Events.on(engine, "afterUpdate", function () {
-    if (carClicked) {
-      // Apply upward force to the car
-      Body.applyForce(carBody, carBody.position, { x: 0, y: -0.04 });
-    }
+  // Apply boundary constraint to the car body
+  let boundaryWidth = 20; // Adjust the width as needed
+  let boundaryHeight = render.options.height; // Use the height of the render canvas
+  let boundaryThickness = 40; // Adjust the thickness as needed
+
+  let boundaryLeft = Bodies.rectangle(
+    -boundaryThickness / 2,
+    boundaryHeight / 2 + 40, // Adjust the drop point by modifying the constant value
+    boundaryThickness,
+    boundaryHeight + 80, // Adjust the height by modifying the constant value
+    { isStatic: true }
+  );
+
+  Composite.add(world, boundaryLeft);
+
+  let boundaryConstraint = Constraint.create({
+    bodyA: carBody,
+    bodyB: boundaryLeft,
+    pointA: { x: -carBody.bounds.min.x, y: 0 },
+    pointB: { x: -boundaryThickness / 2, y: 0 },
+    stiffness: 1,
+    length: 0,
   });
+
+  Composite.add(world, boundaryConstraint);
 
   // Fit the render viewport to the scene
   Render.lookAt(render, {
     min: { x: 0, y: 0 },
     max: { x: 800, y: 600 },
   });
-
-  // Context for MatterTools.Demo
-  return {
-    engine: engine,
-    runner: runner,
-    render: render,
-    canvas: render.canvas,
-    stop: function () {
-      Matter.Render.stop(render);
-      Matter.Runner.stop(runner);
-    },
-  };
 }
 
 /**
@@ -180,49 +181,52 @@ function car(xx, yy, width, height, wheelSize) {
         radius: height * 0.5,
       },
       density: 0.0002,
-    });
-
-  let wheelA = Bodies.circle(xx + wheelAOffset, yy + wheelYOffset, wheelSize, {
-    collisionFilter: {
-      group: group,
-    },
-    friction: 0.8,
-  });
-
-  let wheelB = Bodies.circle(xx + wheelBOffset, yy + wheelYOffset, wheelSize, {
-    collisionFilter: {
-      group: group,
-    },
-    friction: 0.8,
-  });
-
-  let axelA = Constraint.create({
-    bodyB: body,
-    pointB: { x: wheelAOffset, y: wheelYOffset },
-    bodyA: wheelA,
-    stiffness: 1,
-    length: 0,
-  });
-
-  let axelB = Constraint.create({
-    bodyB: body,
-    pointB: { x: wheelBOffset, y: wheelYOffset },
-    bodyA: wheelB,
-    stiffness: 1,
-    length: 0,
-  });
-
-  Composite.addBody(car, body);
-  Composite.addBody(car, wheelA);
-  Composite.addBody(car, wheelB);
-  Composite.addConstraint(car, axelA);
-  Composite.addConstraint(car, axelB);
-
-  return car;
+});
+let wheelA = Bodies.circle(
+xx + wheelAOffset,
+yy + wheelYOffset,
+wheelSize,
+{
+  collisionFilter: {
+    group: group,
+  },
+  friction: 0.8,
 }
+);
 
-// Call the init() function to initialize the engine and renderer
-init();
+let wheelB = Bodies.circle(
+xx + wheelBOffset,
+yy + wheelYOffset,
+wheelSize,
+{
+  collisionFilter: {
+    group: group,
+  },
+  friction: 0.8,
+}
+);
 
-// Call the carFunc() function to create and start the car
-carFunc();
+let axelA = Constraint.create({
+bodyB: body,
+pointB: { x: wheelAOffset, y: wheelYOffset },
+bodyA: wheelA,
+stiffness: 1,
+length: 0,
+});
+
+let axelB = Constraint.create({
+bodyB: body,
+pointB: { x: wheelBOffset, y: wheelYOffset },
+bodyA: wheelB,
+stiffness: 1,
+length: 0,
+});
+
+Composite.addBody(car, body);
+Composite.addBody(car, wheelA);
+Composite.addBody(car, wheelB);
+Composite.addConstraint(car, axelA);
+Composite.addConstraint(car, axelB);
+
+return car;
+}

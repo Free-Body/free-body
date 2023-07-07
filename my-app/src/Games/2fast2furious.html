@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>2 Fast 2 Furious</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.js"></script>
+    <script src="2fast2furious.js"></script>
     <style>
       canvas {
         position: relative;
@@ -16,21 +17,9 @@
   </head>
   <body onload="init()">
     <div id="areaToRender"></div>
-    <div>
-      <label for="velocityInput">Velocity:</label>
-      <input
-        type="range"
-        id="velocityInput"
-        min="0"
-        max="10"
-        step="0.1"
-        value="5"
-      />
-      <span id="velocityOutput">5</span>
-    </div>
     <button onclick="carFunc()">Play Cars</button>
 
-    <script>
+    <!-- <script>
       let Engine = Matter.Engine,
         Render = Matter.Render,
         Runner = Matter.Runner,
@@ -262,7 +251,7 @@
 
     return car;
   }
-</script>
+</script> -->
   </body>
 </html>
 
