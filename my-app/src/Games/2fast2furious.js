@@ -115,7 +115,8 @@ function carFunc() {
 
   // See car function defined later in this file
   let scale = 0.9;
-  let carBody = car(60, 570, 150 * scale, 30 * scale, 30 * scale); // Adjust the position of the car as needed
+  let v= 60;
+  let carBody = car(60, 570, 150 * scale, 30 * scale, 30 * scale, v); // Adjust the position of the car as needed
 
   // Add the car body to the world
   Composite.add(world, carBody);
@@ -131,36 +132,39 @@ function carFunc() {
     velocityValue.textContent = velocity + " m/s";
   });
 
+  let velocity = parseFloat(velocityInput.value);
+
   // Add event listener to update the car's position when clicked
-  Events.on(engine, "beforeUpdate", function () {
-    if (carClicked) {
-      // Get the desired velocity from the input element
-      let velocity = parseFloat(velocityInput.value);
+  // Events.on(carBody, "afterUpdate", function () {
+  //   console.log('click')
+  //   if (carClicked === false) {
+  //     // Get the desired velocity from the input element
+  //     let velocity = parseFloat(velocityInput.value);
 
-      // Calculate the speed based on the desired velocity
-      let speed = velocity * 1000; // Convert m/s to pixels/s
+  //     // Calculate the speed based on the desired velocity
+  //     let speed = velocity * 1000; // Convert m/s to pixels/s
 
-      // Set the car's velocity
-      Body.setVelocity(carBody, { x: 0, y: -speed });
+  //     // Set the car's velocity
+  //     Body.setVelocity(carBody, { x: 0, y: -speed });
 
-      carClicked = false; // Reset the carClicked flag
-    }
-  });
+  //     carClicked = true; // Reset the carClicked flag
+  //   }
+  // });
 
   // Apply boundary constraint to the car body
-  let boundaryWidth = 20; // Adjust the width as needed
-  let boundaryHeight = render.options.height; // Use the height of the render canvas
-  let boundaryThickness = 40; // Adjust the thickness as needed
+  // let boundaryWidth = 20; // Adjust the width as needed
+  // let boundaryHeight = render.options.height; // Use the height of the render canvas
+  // let boundaryThickness = 40; // Adjust the thickness as needed
 
-  let boundaryLeft = Bodies.rectangle(
-    -boundaryThickness / 2,
-    boundaryHeight / 2 + 40, // Adjust the drop point by modifying the constant value
-    boundaryThickness,
-    boundaryHeight + 80, // Adjust the height by modifying the constant value
-    { isStatic: true }
-  );
+  // let boundaryLeft = Bodies.rectangle(
+  //   -boundaryThickness / 2,
+  //   boundaryHeight / 2 + 40, // Adjust the drop point by modifying the constant value
+  //   boundaryThickness,
+  //   boundaryHeight + 80, // Adjust the height by modifying the constant value
+  //   { isStatic: true }
+  // );
 
-  Composite.add(world, boundaryLeft);
+  // Composite.add(world, boundaryLeft);
 
   //   let boundaryConstraint = Constraint.create({
   //     bodyA: carBody,
@@ -171,16 +175,16 @@ function carFunc() {
   //     length: 0,
   //   });
 
-  let boundaryConstraint = Constraint.create({
-    bodyA: carBody,
-    pointA: { x: -carBody.bounds.min.x, y: 0 },
-    bodyB: boundaryLeft,
-    pointB: { x: -boundaryThickness / 2, y: 0 },
-    stiffness: 1,
-    length: 0,
-  });
+  // let boundaryConstraint = Constraint.create({
+  //   bodyA: carBody,
+  //   pointA: { x: -carBody.bounds.min.x, y: 0 },
+  //   bodyB: boundaryLeft,
+  //   pointB: { x: -boundaryThickness / 2, y: 0 },
+  //   stiffness: 1,
+  //   length: 0,
+  // });
 
-  Composite.add(world, boundaryConstraint);
+  // Composite.add(world, boundaryConstraint);
 
   // Fit the render viewport to the scene
   Render.lookAt(render, {
@@ -197,9 +201,10 @@ function carFunc() {
  * @param {number} width
  * @param {number} height
  * @param {number} wheelSize
+ * @param {number} velocity
  * @return {composite} A new composite car body
  */
-function car(xx, yy, width, height, wheelSize) {
+function car(xx, yy, width, height, wheelSize, v) {
   let Body = Matter.Body,
     Bodies = Matter.Bodies,
     Composite = Matter.Composite,
@@ -251,6 +256,12 @@ function car(xx, yy, width, height, wheelSize) {
     length: 0,
   });
 
+  Body.setVelocity(body, {x: v, y: 0});
+  Body.setVelocity(wheelA, {x: v, y: 0});
+  Body.setVelocity(wheelB, {x: v, y: 0});
+
+
+  console.log(body)
   Composite.addBody(car, body);
   Composite.addBody(car, wheelA);
   Composite.addBody(car, wheelB);
