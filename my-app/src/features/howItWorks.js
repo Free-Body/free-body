@@ -35,7 +35,7 @@ const How = () => {
           <h2>Acceleration</h2>
         </div>
         <div className="image-wrapper">
-          <Link to="/buoyancy">
+          <Link to="/aboutbuoyancy">
             <img
               id="buoyancyimage"
               src={require("./images/buoyancy.png")}

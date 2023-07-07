@@ -7,9 +7,10 @@ import How from "../features/howItWorks";
 import Activity from "../features/activityLand";
 import Projectiles from "../features/LearnAbout/projectiles";
 import Acceleration from "../features/LearnAbout/acceleration";
-import Buoyancy from "../features/LearnAbout/buoyancy";
+import AboutBuoyancy from "../features/LearnAbout/buoyancy";
 import Circuitry from "../features/LearnAbout/circuits";
 import PizzaToss from "../Games/pizzaTossComponent";
+import BuoyancySimulation from "../Games/freeFloating";
 
 const AppRoutes = () => {
   return (
@@ -20,12 +21,12 @@ const AppRoutes = () => {
         <Route path="/meettheteam" element={<Meet />} />
         <Route path="/howitworks" element={<How />} />
         <Route path="/activityland" element={<Activity />} />
+        <Route path="/games/freefloating" element={<BuoyancySimulation />} />
 
         <Route path="/projectile-motion" element={<Projectiles />} />
         <Route path="/acceleration" element={<Acceleration />} />
-        <Route path="/buoyancy" element={<Buoyancy />} />
+        <Route path="/aboutbuoyancy" element={<AboutBuoyancy />} />
         <Route path="/circuitry" element={<Circuitry />} />
-
         <Route path="/pizzatoss" element={<PizzaToss />} />
       </Routes>
     </div>

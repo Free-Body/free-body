@@ -40,7 +40,7 @@ function InteractiveImage() {
           <area
             shape="rect"
             coords="x256,y600,x93,y380"
-            href="../features/HomePage/homePage"
+            href="./games/freefloating"
             alt="Buoyancy Game"
           />
           <area
