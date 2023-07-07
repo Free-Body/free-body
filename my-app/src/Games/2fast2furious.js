@@ -1,3 +1,40 @@
+// velocity toggle
+
+let velocity = 0;
+let isVelocityIncreasing = false;
+let velocityInterval;
+
+function updateVelocity(value) {
+  velocity = parseInt(value);
+  document.getElementById("velocityValue").textContent = velocity + " m/s";
+}
+
+function toggleVelocity() {
+  if (isVelocityIncreasing) {
+    clearInterval(velocityInterval);
+  } else {
+    velocityInterval = setInterval(increaseVelocity, 1000);
+  }
+  isVelocityIncreasing = !isVelocityIncreasing;
+}
+
+function increaseVelocity() {
+  let currentVelocity = parseInt(velocityInput.value);
+  let newVelocity = currentVelocity + 1;
+  velocityInput.value = newVelocity;
+  updateVelocity(newVelocity);
+}
+
+let velocityInput = document.getElementById("velocityInput");
+
+velocityInput.addEventListener("input", function (event) {
+  let velocity = parseInt(event.target.value);
+  updateVelocity(velocity);
+});
+//////////////////////////////////////////////////////////////////////////////////
+
+
+
 let Engine = Matter.Engine,
   Render = Matter.Render,
   Runner = Matter.Runner,
