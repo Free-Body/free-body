@@ -1,52 +1,14 @@
-<!DOCTYPE html>
-<html>
-<link rel="stylesheet" href="../features/style.css">
+import React, { useEffect } from "react";
+import p2 from "p2";
+import "../../p2.min.js";
+import "../../p2.renderer.min.js";
 
-<head>
-  <title>Free Floating</title>
-  <h1 id="header">Free Floating Simulation</h1>
-  <div>
-    <div className="instructions">
-      <p>Click to drag objects or the water</p>
-      <p>Scroll to zoom in</p>
-      <p>Try seeing how many items you can stack or just play around with the objects!</p>
-      <p>Press A once to draw circles/Press A again to go back to draggable objects</p>
-      <p>Press D once to draw custom shapes/Press D again to go back to draggable objects</p>
-      <p>Press F once to draw solid rectangles as obstacles/Press F again to go back to draggable objects</p>
-    </div>
-  </div>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-    }
-
-    canvas {
-      display: block;
-    }
-
-    .object-container {
-      margin-bottom: 20px;
-    }
-  </style>
-</head>
-
-<body>
-  <div id="objectContainer">
-    <div class="object-container">
-    </div>
-  </div>
-  <button id="addObjectButton">Add Object</button>
-  <button id="resetButton">Reset</button>
-
-  <script src="../../p2.min.js"></script>
-  <script src="../../p2.renderer.min.js"></script>
-  <script>
-
+const FreeFloatingComponent = () => {
+  useEffect(() => {
     document.addEventListener("DOMContentLoaded", function (event) {
       let app = new p2.WebGLRenderer(function () {
         let world = new p2.World({
-          gravity: [0, -10]
+          gravity: [0, -10],
         });
 
         this.setWorld(world);
@@ -54,23 +16,23 @@
         let planeShape = new p2.Plane();
         let plane = new p2.Body({
           position: [0, 0],
-          collisionResponse: false
+          collisionResponse: false,
         });
         plane.addShape(planeShape);
         world.addBody(plane);
 
         let objects = [];
 
-        let objectContainer = document.getElementById('objectContainer');
-        let addObjectButton = document.getElementById('addObjectButton');
-        let resetButton = document.getElementById('resetButton');
+        let objectContainer = document.getElementById("objectContainer");
+        let addObjectButton = document.getElementById("addObjectButton");
+        let resetButton = document.getElementById("resetButton");
 
-        addObjectButton.addEventListener('click', function () {
+        addObjectButton.addEventListener("click", function () {
           createObject();
         });
 
-        resetButton.addEventListener('click', function () {
-          objectContainer.innerHTML = '';
+        resetButton.addEventListener("click", function () {
+          objectContainer.innerHTML = "";
 
           objects.forEach(function (object) {
             world.removeBody(object.body);
@@ -80,38 +42,35 @@
         });
 
         function createObject() {
-          let objectElement = document.createElement('div');
-          objectElement.classList.add('object-container');
+          let objectElement = document.createElement("div");
+          objectElement.classList.add("object-container");
 
-          let massSlider = document.createElement('input');
-          massSlider.type = 'range';
-          massSlider.classList.add('massSlider');
-          massSlider.min = '0.1';
-          massSlider.max = '100';
-          massSlider.step = '0.1';
-          massSlider.value = '1';
+          let massSlider = document.createElement("input");
+          massSlider.type = "range";
+          massSlider.classList.add("massSlider");
+          massSlider.min = "0.1";
+          massSlider.max = "100";
+          massSlider.step = "0.1";
+          massSlider.value = "1";
 
-          let massValue = document.createElement('span');
-          massValue.classList.add('massValue');
-          massValue.textContent = '1';
+          let massValue = document.createElement("span");
+          massValue.classList.add("massValue");
+          massValue.textContent = "1";
 
-          let massUnit = document.createElement('span');
-          massUnit.classList.add('massUnit');
-          massUnit.textContent = 'kg';
+          let massUnit = document.createElement("span");
+          massUnit.classList.add("massUnit");
+          massUnit.textContent = "kg";
 
           objectElement.appendChild(massSlider);
           objectElement.appendChild(massValue);
           objectElement.appendChild(massUnit);
 
-
-          objectElement.appendChild(massSlider);
-          objectElement.appendChild(massValue);
           objectContainer.appendChild(objectElement);
 
           let object = new p2.Body({
             mass: parseFloat(massSlider.value),
             position: [0, 2],
-            angularVelocity: 0.5
+            angularVelocity: 0.5,
           });
           object.addShape(new p2.Circle({ radius: 0.5 }), [0.5, 0], 0);
           object.addShape(new p2.Circle({ radius: 0.5 }), [-0.5, 0], 0);
@@ -120,11 +79,11 @@
           objects.push({
             body: object,
             massSlider: massSlider,
-            massValue: massValue
+            massValue: massValue,
           });
 
           // Update masses on slider change
-          massSlider.addEventListener('input', function () {
+          massSlider.addEventListener("input", function () {
             object.mass = parseFloat(massSlider.value);
             massValue.textContent = massSlider.value;
           });
@@ -133,7 +92,7 @@
         createObject(); // Create initial object
 
         // Add forces every step
-        world.on('postStep', function () {
+        world.on("postStep", function () {
           for (let i = 0; i < objects.length; i++) {
             let obj = objects[i];
             applyAABBBuoyancyForces(obj.body, plane.position, k, c);
@@ -172,7 +131,11 @@
               let width = aabb.upperBound[0] - aabb.lowerBound[0];
               let height = 0 - aabb.lowerBound[1];
               areaUnderWater = width * height;
-              p2.vec2.set(centerOfBouyancy, aabb.lowerBound[0] + width / 2, aabb.lowerBound[1] + height / 2);
+              p2.vec2.set(
+                centerOfBouyancy,
+                aabb.lowerBound[0] + width / 2,
+                aabb.lowerBound[1] + height / 2
+              );
             } else {
               continue;
             }
@@ -196,7 +159,40 @@
         }
       });
     });
-  </script>
-</body>
+  }, []);
 
-</html>
+  return (
+    <div>
+      <link rel="stylesheet" href="../features/style.css" />
+
+      <h1 id="header">Free Floating Simulation</h1>
+      <div>
+        <div className="instructions">
+          <p>Click to drag objects or the water</p>
+          <p>Scroll to zoom in</p>
+          <p>
+            Try seeing how many items you can stack or just play around with the
+            objects!
+          </p>
+          <p>
+            Press A once to draw circles/Press A again to go back to draggable
+            objects
+          </p>
+          <p>
+            Press D once to draw custom shapes/Press D again to go back to
+            draggable objects
+          </p>
+          <p>
+            Press F once to draw solid rectangles as obstacles/Press F again to
+            go back to draggable objects
+          </p>
+        </div>
+      </div>
+      <div id="objectContainer" className="object-container"></div>
+      <button id="addObjectButton">Add Object</button>
+      <button id="resetButton">Reset</button>
+    </div>
+  );
+};
+
+export default FreeFloatingComponent;
