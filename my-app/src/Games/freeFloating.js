@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from "react";
+
 import p2 from "p2";
 
 const BuoyancySimulation = () => {
   const objectContainerRef = useRef();
   const addObjectButtonRef = useRef();
   const resetButtonRef = useRef();
+  const objects = [];
 
   useEffect(() => {
     const objectContainer = objectContainerRef.current;
@@ -31,14 +33,13 @@ const BuoyancySimulation = () => {
       world.addBody(plane);
 
       createObject();
-      animate();
     }
 
     function createObject() {
-      const objectElement = document.createElement("div");
+      let objectElement = document.createElement("div");
       objectElement.classList.add("object-container");
 
-      const massSlider = document.createElement("input");
+      let massSlider = document.createElement("input");
       massSlider.type = "range";
       massSlider.classList.add("massSlider");
       massSlider.min = "0.1";
@@ -46,20 +47,21 @@ const BuoyancySimulation = () => {
       massSlider.step = "0.1";
       massSlider.value = "1";
 
-      const massValue = document.createElement("span");
+      let massValue = document.createElement("span");
       massValue.classList.add("massValue");
       massValue.textContent = "1";
 
-      const massUnit = document.createElement("span");
+      let massUnit = document.createElement("span");
       massUnit.classList.add("massUnit");
       massUnit.textContent = "kg";
 
       objectElement.appendChild(massSlider);
       objectElement.appendChild(massValue);
       objectElement.appendChild(massUnit);
+
       objectContainer.appendChild(objectElement);
 
-      const object = new p2.Body({
+      let object = new p2.Body({
         mass: parseFloat(massSlider.value),
         position: [0, 2],
         angularVelocity: 0.5,
@@ -67,6 +69,25 @@ const BuoyancySimulation = () => {
       object.addShape(new p2.Circle({ radius: 0.5 }), [0.5, 0], 0);
       object.addShape(new p2.Circle({ radius: 0.5 }), [-0.5, 0], 0);
       world.addBody(object);
+
+      objects.push({
+        body: object,
+        massSlider: massSlider,
+        massValue: massValue,
+      });
+
+      // Update masses on slider change
+      massSlider.addEventListener("input", function () {
+        object.mass = parseFloat(massSlider.value);
+        massValue.textContent = massSlider.value;
+      });
+
+      // Position the object element
+      const translationX =
+        object.position[0] * 100 + objectContainer.offsetWidth / 2;
+      const translationY =
+        -object.position[1] * 100 + objectContainer.offsetHeight / 2;
+      objectElement.style.transform = `translate(${translationX}px, ${translationY}px)`;
     }
 
     function resetObjects() {
@@ -74,27 +95,74 @@ const BuoyancySimulation = () => {
       world.bodies.forEach((body) => world.removeBody(body));
     }
 
-    function animate() {
-      world.step(1 / 60);
-
-      // Update the objects' positions
-      for (let i = 0; i < world.bodies.length; i++) {
-        const body = world.bodies[i];
-        if (body.shapes.length === 0) continue;
-
-        const objectElement = objectContainer.children[i];
-        const position = body.position;
-        const angle = body.angle;
-
-        objectElement.style.transform = `translate(${position[0] * 100}px, ${
-          -position[1] * 100
-        }px) rotate(${angle}rad)`;
-      }
-
-      requestAnimationFrame(animate);
-    }
-
     initializeSimulation();
+
+    // Add forces every step
+    world.on("postStep", function () {
+      for (let i = 0; i < objects.length; i++) {
+        let obj = objects[i];
+        applyAABBBuoyancyForces(obj.body, plane.position, k, c);
+      }
+    });
+
+    let shapePosition = [0, 0];
+    let centerOfBouyancy = [0, 0];
+    let liftForce = [0, 0];
+    let viscousForce = [0, 0];
+    let shapeAngle = 0;
+    let k = 100; // up force per submerged "volume"
+    let c = 0.8; // viscosity
+    let v = [0, 0];
+    let aabb = new p2.AABB();
+
+    function applyAABBBuoyancyForces(body, planePosition, k, c) {
+      for (let i = 0; i < body.shapes.length; i++) {
+        let shape = body.shapes[i];
+
+        // Get shape world transform
+        body.vectorToWorldFrame(shapePosition, shape.position);
+        p2.vec2.add(shapePosition, shapePosition, body.position);
+        shapeAngle = shape.angle + body.angle;
+
+        // Get shape AABB
+        shape.computeAABB(aabb, shapePosition, shapeAngle);
+
+        let areaUnderWater;
+        if (aabb.upperBound[1] < planePosition[1]) {
+          // Fully submerged
+          p2.vec2.copy(centerOfBouyancy, shapePosition);
+          areaUnderWater = shape.area;
+        } else if (aabb.lowerBound[1] < planePosition[1]) {
+          // Partially submerged
+          let width = aabb.upperBound[0] - aabb.lowerBound[0];
+          let height = 0 - aabb.lowerBound[1];
+          areaUnderWater = width * height;
+          p2.vec2.set(
+            centerOfBouyancy,
+            aabb.lowerBound[0] + width / 2,
+            aabb.lowerBound[1] + height / 2
+          );
+        } else {
+          continue;
+        }
+
+        // Compute lift force
+        p2.vec2.subtract(liftForce, planePosition, centerOfBouyancy);
+        p2.vec2.scale(liftForce, liftForce, areaUnderWater * k);
+        liftForce[0] = 0;
+
+        // Make center of buoyancy relative to the body
+        p2.vec2.subtract(centerOfBouyancy, centerOfBouyancy, body.position);
+
+        // Viscous force
+        body.getVelocityAtPoint(v, centerOfBouyancy);
+        p2.vec2.scale(viscousForce, v, -c);
+
+        // Apply forces
+        body.applyForce(viscousForce, centerOfBouyancy);
+        body.applyForce(liftForce, centerOfBouyancy);
+      }
+    }
   }, []);
 
   return (
@@ -102,7 +170,7 @@ const BuoyancySimulation = () => {
       <h1 id="header">Free Floating Simulation</h1>
       <div>
         <div className="instructions">
-          <p>Click to drag objects or the water</p>
+          {/* <p>Click to drag objects or the water</p>
           <p>Scroll to zoom in</p>
           <p>
             Try seeing how many items you can stack or just play around with the
@@ -119,7 +187,7 @@ const BuoyancySimulation = () => {
           <p>
             Press F once to draw solid rectangles as obstacles/Press F again to
             go back to draggable objects
-          </p>
+          </p> */}
         </div>
       </div>
 
