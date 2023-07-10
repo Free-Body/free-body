@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 
 const FastFurious = () => {
     useEffect(() => {
-        // window.onload=init();
+        window.onload=init();
     }, [])
     return (
     <div className="pizzaToss">
