@@ -9,14 +9,6 @@ function InteractiveImage() {
           src={require("./images/physicsuniversity.png")}
           alt="Interactive"
           useMap="#image-map"
-          style={{
-            width: "600px",
-            height: "auto",
-            marginBottom: "2%",
-            borderRadius: "177px",
-            paddingRight: "50px",
-            paddingLeft: "50px",
-          }}
         />
         <map name="image-map">
           <area
