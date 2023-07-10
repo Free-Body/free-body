@@ -10,20 +10,20 @@ function FreeFloating() {
   return (
     <div className="pizzaToss">
       <h1>Free Floating Simulation</h1>
-      <ul> Directions
+      <ol> Directions
         <li>Click to drag objects or the water</li>
         <li>Scroll to zoom in</li>
         <li>
           Try seeing how many items you can stack or just play around with the
           objects!
         </li>
-      </ul>
+      </ol>
 
-      <ul> Hints
+      <ol> Hints
         <li>Why might a boat float but a rock sink?</li>
         <li>Smaller radii objects can be hard to see, so look closely! They might be bouncing or sinking!</li>
         <li>Notice the objects aren't starting at sea level. Consider how this might affect their net force! </li>
-      </ul>
+      </ol>
 
       <div id="areaToRender"></div>
       
