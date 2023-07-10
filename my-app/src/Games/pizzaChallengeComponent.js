@@ -24,13 +24,13 @@ const PizzaChallenge = () => {
         <div id="areaToRender"></div>
         <div>
             <label htmlFor="xvelocityRange">X Velocity: <span id="xvelocityVal">10</span> m/s</label>
-            <input type="range" id="xvelocityRange" min="10" max="40" step="10"  defaultValue="15"/>
+            <input type="range" id="xvelocityRange" min="10" max="40" step="5"  defaultValue="15"/>
 
             <label htmlFor="yvelocityRange">Y Velocity: <span id="yvelocityVal">10</span> m/s</label>
-            <input type="range" id="yvelocityRange" min="10" max="40" step="10"  defaultValue="15"/>
+            <input type="range" id="yvelocityRange" min="1" max="40" step="5"  defaultValue="15"/>
 
             <label htmlFor="massRange">Mass: <span id="massVal">50</span> grams</label>
-            <input type="range" id="massRange" min="10" max="50" step="10"  defaultValue="25"/>
+            <input type="range" id="massRange" min="1" max="50" step="10"  defaultValue="25"/>
 
             <label htmlFor="gravityRange">Gravity: <span id="gravityVal">0.001 </span> m/s2 </label>
             <input type="range" id="gravityRange" min="0.0005" max="0.003" step="0.0005"  defaultValue="0.001"/>

@@ -10,7 +10,7 @@ function InteractiveImage() {
           alt="Interactive"
           useMap="#image-map"
           style={{
-            width: "65%",
+            width: "600px",
             height: "auto",
             marginBottom: "2%",
             borderRadius: "177px",
@@ -28,12 +28,12 @@ function InteractiveImage() {
           <area
             shape="rect"
             coords="x274,y73,x914,y196"
-            href="/acceleration"
+            href="/2fast2furious"
             alt="Acceleration Game"
           />
           <area
             shape="rect"
-            coords="x256,y2            ,00,x93,y300"
+            coords="x256,y200,x93,y300"
             href="/freefloating"
             alt="Buoyancy Game"
           />
