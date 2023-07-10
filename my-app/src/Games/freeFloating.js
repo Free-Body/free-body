@@ -1,4 +1,5 @@
 import Matter from "matter-js"
+let ocean = require("../features/images/ocean.jpg");
 
 let Engine = Matter.Engine,
   Render = Matter.Render,
@@ -6,8 +7,6 @@ let Engine = Matter.Engine,
   Body = Matter.Body,
   Bodies = Matter.Bodies,
   Composite = Matter.Composite,
-  Composites = Matter.Composites,
-  Constraint = Matter.Constraint,
   Mouse = Matter.Mouse,
   MouseConstraint = Matter.MouseConstraint,
   Events = Matter.Events;
@@ -24,10 +23,10 @@ export const init = function () {
     element: document.getElementById("areaToRender"),
     engine: engine,
     options: {
-      width: 1000,
+      width: 770,
       height: 600,
       pixelRatio: 1,
-      background: "skyblue",
+      background: ocean,
       wireframes: false,
     },
   });
