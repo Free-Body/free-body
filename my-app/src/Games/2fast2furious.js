@@ -1,61 +1,20 @@
-
-// velocity toggle
-
-let velocity = 0;
-let isVelocityIncreasing = false;
-let velocityInterval;
-
-function updateVelocity(value) {
-  velocity = parseInt(value);
-  document.getElementById("velocityValue").textContent = velocity + " m/s";
-}
-
-function toggleVelocity() {
-  if (isVelocityIncreasing) {
-    clearInterval(velocityInterval);
-  } else {
-    velocityInterval = setInterval(increaseVelocity, 1000);
-  }
-  isVelocityIncreasing = !isVelocityIncreasing;
-}
-
-function increaseVelocity() {
-  let currentVelocity = parseInt(velocityInput.value);
-  let newVelocity = currentVelocity + 1;
-  velocityInput.value = newVelocity;
-  updateVelocity(newVelocity);
-}
-
-let velocityInput = document.getElementById("velocityInput");
-
-velocityInput.addEventListener("input", function (event) {
-  let velocity = parseInt(event.target.value);
-  updateVelocity(velocity);
-});
-//////////////////////////////////////////////////////////////////////////////////
+import Matter from "matter-js";
 
 let Engine = Matter.Engine,
   Render = Matter.Render,
   Runner = Matter.Runner,
   Bodies = Matter.Bodies,
   Composite = Matter.Composite,
-  Composites = Matter.Composites,
-  Constraint = Matter.Constraint,
-  Mouse = Matter.Mouse,
-  MouseConstraint = Matter.MouseConstraint,
-  Body = Matter.Body,
   Events = Matter.Events;
 
 let engine;
 let render;
 let runner;
-let world;
 
-function init() {
+export const init = function () {
   // create an engine
   engine = Engine.create();
-  world = engine.world;
-  // create a renderer
+ // create a renderer
   render = Render.create({
     element: document.getElementById("areaToRender"),
     engine: engine,
@@ -79,14 +38,14 @@ function init() {
 
 //this function clears world between games
 function clearWorld() {
-  Matter.Composite.clear(world, false);
+  Matter.Composite.clear(engine.world, false);
 }
 
-function carFunc() {
+export const carFunc = function() {
   clearWorld();
 
   // Add bodies
-  Composite.add(world, [
+  Composite.add(engine.world, [
     // Grounds
     Bodies.rectangle(400, 590, 800, 20, { isStatic: true }), // Bottom ground
 
@@ -94,7 +53,6 @@ function carFunc() {
     Bodies.rectangle(260, 550, 400, 20, {
       isStatic: true,
       angle: -Math.PI * 0.1,
-      render: { fillStyle: "#060a19" },
       label: "Left ramp",
     }),
 
@@ -102,14 +60,12 @@ function carFunc() {
     Bodies.rectangle(600, 550, 400, 20, {
       isStatic: true,
       angle: Math.PI * 0.1,
-      render: { fillStyle: "#060a19" },
       label: "Right ramp",
     }),
 
     // Gap
     Bodies.rectangle(400, 550, 100, 150, {
       isStatic: true,
-      render: { fillStyle: "#FAFAFA" },
       label: "Gap",
     }),
   ]);
@@ -129,13 +85,13 @@ function carFunc() {
   let carBody = car(60, 570, 150 * scale, 30 * scale, 30 * scale, velocity); // Adjust the position of the car as needed
 
   // Add the car body to the world
-  Composite.add(world, carBody);
+  Composite.add(engine.world, [carBody]);
 
   let hasWon = false; // Track if the player has already won
 
   // Check car position on the right side of the canvas
   function checkWinCondition() {
-    if (!hasWon && carBody.bodies[0].position.x > render.options.width) {
+    if (!hasWon && carBody.bodies[0].position.x > 800) {
       hasWon = true; // Set the flag to true to prevent further checks
       displayWinMessage();
       Events.off(engine, "beforeUpdate", checkWinCondition); // Stop checking the win condition
@@ -150,13 +106,12 @@ function carFunc() {
     document.body.appendChild(winMessage);
   }
 
-
   // Check the win condition continuously
   Events.on(engine, "beforeUpdate", checkWinCondition);
 }
 
 let boundaryWidth = 20; // Adjust the width as needed
-let boundaryHeight = render.options.height; // Use the height of the render canvas
+let boundaryHeight = 600; // Use the height of the render canvas
 let boundaryThickness = 40; // Adjust the thickness as needed
 
 let boundaryLeft = Bodies.rectangle(
@@ -166,14 +121,6 @@ let boundaryLeft = Bodies.rectangle(
   boundaryHeight + 80, // Adjust the height by modifying the constant value
   { isStatic: true }
 );
-
-Composite.add(world, boundaryLeft);
-
-// Fit the render viewport to the scene
-Render.lookAt(render, {
-  min: { x: 0, y: 0 },
-  max: { x: 800, y: 600 },
-});
 
 /**
  * Creates a composite with simple car setup of bodies and constraints.
@@ -242,7 +189,6 @@ function car(xx, yy, width, height, wheelSize, v) {
   Body.setVelocity(wheelA, { x: v, y: 0 });
   Body.setVelocity(wheelB, { x: v, y: 0 });
 
-  console.log(body);
   Composite.addBody(car, body);
   Composite.addBody(car, wheelA);
   Composite.addBody(car, wheelB);

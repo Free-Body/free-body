@@ -7,6 +7,7 @@ const PizzaChallenge = () => {
     useEffect(() => {
         window.onload=init();
     }, [])
+    
     return (
     <div className="pizzaToss">
         <h2>Pizza Toss - CHALLENGE MODE</h2>
