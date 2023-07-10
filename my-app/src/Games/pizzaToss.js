@@ -5,6 +5,7 @@ import Matter from "matter-js"
 let Engine = Matter.Engine,
   Render = Matter.Render,
   Runner = Matter.Runner,
+  Body = Matter.Body,
   Bodies = Matter.Bodies,
   Composite = Matter.Composite,
   Composites = Matter.Composites,
@@ -221,4 +222,92 @@ function results(pyramid, pyramidInstance, ground2) {
   if (blocksOnGround >= pyramidInstance.blockCount) {
     pyramidInstance.knockOver();
   }
+}
+
+export const Challenge = function () {
+  clearWorld();
+
+  //constants
+  let width = 1600;
+  let height = 600;
+  let groundWidth = 1600;
+  let groundHeight = 100;
+
+  // grab HTML
+  let realHeight = 600;
+  let massRange = document.getElementById("massRange");
+  let realMass = massRange.value;
+  let gravityRange = document.getElementById("gravityRange");
+  let yvelocityRange = document.getElementById("yvelocityRange");
+  let yVelocity = yvelocityRange.value;
+  let xvelocityRange = document.getElementById("xvelocityRange");
+  let xVelocity = xvelocityRange.value;
+
+  // add bodies
+  let ground = Bodies.rectangle(width / 2, height, groundWidth, groundHeight, {isStatic: true,});
+  let wall = Bodies.rectangle(width, height /2, 1, height, {isStatic: true});
+  let pizza = createPizza(realHeight, realMass);
+
+
+  Body.setVelocity(pizza, {x: xVelocity, y: -yVelocity});
+
+  // adjust mass
+  massRange.addEventListener("mouseup", function () {
+    let massValue = massListener(pizza, realHeight);
+    pizza = createPizza(realHeight, massValue);
+    Composite.add(engine.world, pizza);
+    Engine.update(engine);
+  });
+
+  // adjust gravity
+  gravityRange.addEventListener("mouseup", function() {gravityListener()});
+
+  //adjust velocity
+  yvelocityRange.addEventListener("mouseup", function() {
+    yvelocityRange = document.getElementById("yvelocityRange");
+    let yVelocityVal = document.getElementById("yvelocityVal");
+    yVelocity = parseFloat(yvelocityRange.value);
+    yVelocityVal.innerHTML = `${yVelocity}`;
+  });
+
+  xvelocityRange.addEventListener("mouseup", function() {
+    xvelocityRange = document.getElementById("xvelocityRange");
+    let xVelocityVal = document.getElementById("xvelocityVal");
+    xVelocity = parseFloat(xvelocityRange.value);
+    xVelocityVal.innerHTML = `${xVelocity}`;
+  });
+
+  // set pyramid
+  let ground2 = Bodies.rectangle(610, 350, groundWidth / 4, groundHeight / 3, { isStatic: true });
+  let pyramidInstance = new Pyramid(610);
+  let pyramid = pyramidInstance.body;
+
+  // add mouse control
+  let mouse = Mouse.create(render.canvas),
+    mouseConstraint = MouseConstraint.create(engine, {
+      mouse: mouse,
+      constraint: {
+        stiffness: 0.2,
+        render: {
+          visible: false,
+        },
+      },
+    });
+
+  //checks results of collision  
+  Events.on(engine, "afterUpdate", function () {
+    results(pyramid, pyramidInstance, ground2, mouseConstraint, pizza, realHeight, realMass);
+    if (
+      mouseConstraint.mouse.button === -1 &&
+      (pizza.position.x > 190 || pizza.position.y < realHeight - 0.9 * realHeight)
+    ) {
+      let massValue = massListener(pizza, realHeight);
+      pizza = createPizza(realHeight, massValue);
+      Composite.add(engine.world, pizza);
+    }
+  });
+
+  Composite.add(engine.world, [ground, ground2, pyramid, pizza, wall]);
+  Composite.add(engine.world, mouseConstraint);
+  render.mouse = mouse;
 }
