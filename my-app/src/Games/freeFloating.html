@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Free Floating</title>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.17.1/matter.js"></script>
+    <script src="freeFloating.js"></script>
+    <style>
+        body {
+        margin: 0;
+        overflow: hidden;
+        }
+
+        canvas {
+        display: block;
+        }
+
+        .object-container {
+        margin-bottom: 20px;
+        }
+    </style>
+
+</head>
+
+<body onload="init()">
+    <button onclick="startFreeFloat()">Start Game</button>
+    <button id="addObjectButton">Add Buoyant Object</button>
+    <button id="resetButton">Reset</button>
+
+  <!-- Sliders for mass -->
+  <label for="massSlider">Mass:</label>
+  <input type="range" id="massSlider" min="1" max="101" step="10" defaultValue="50">
+  <span id="massValue">50</span> kg
+<div id="areaToRender"></div>
+
+  <!-- <script>
+    var Constraint = Matter.Constraint;
+    var waterLevel = 300; // The y-coordinate of the water's surface
+
+    document.addEventListener("DOMContentLoaded", function (event) {
+      var Engine = Matter.Engine,
+        Render = Matter.Render,
+        World = Matter.World,
+        Bodies = Matter.Bodies,
+        Body = Matter.Body,
+        Events = Matter.Events,
+        Mouse = Matter.Mouse,
+        MouseConstraint = Matter.MouseConstraint;
+
+      var engine = Engine.create(),
+        world = engine.world;
+
+      var render = Render.create({
+        element: document.body,
+        engine: engine,
+        options: {
+          width: 800,
+          height: 600,
+          wireframes: false,
+        },
+      });
+
+      Engine.run(engine);
+      Render.run(render);
+
+      var ground = Bodies.rectangle(400, 610, 810, 60, {
+        isStatic: true,
+        friction: 0.9,
+        restitution: 1.0,
+      });
+      World.add(world, [ground]);
+
+      var buoyantObjects = [];
+
+      var addObjectButton = document.getElementById("addObjectButton");
+      var resetButton = document.getElementById("resetButton");
+      var massSlider = document.getElementById("massSlider");
+      var massValue = document.getElementById("massValue");
+
+      // Add mouse control
+      var mouse = Mouse.create(render.canvas),
+        mouseConstraint = MouseConstraint.create(engine, {
+          mouse: mouse,
+          constraint: {
+            stiffness: 0.2,
+            render: {
+              visible: false
+            }
+          }
+        });
+
+      World.add(world, mouseConstraint);
+      render.mouse = mouse;
+
+      addObjectButton.addEventListener("click", function () {
+        createObject();
+      });
+
+      resetButton.addEventListener("click", function () {
+        for (let i = 0; i < buoyantObjects.length; i++) {
+          World.remove(world, buoyantObjects[i]);
+        }
+        buoyantObjects = [];
+      });
+
+      massSlider.addEventListener("input", function () {
+        massValue.textContent = massSlider.value + " kg";
+      });
+
+      function createObject() {
+        var mass = parseFloat(massSlider.value);
+        var density = mass / 100; // Density now ranges from 0.001 to 1 kg/m³
+
+        var radius = mass; // Adjusting the radius based on the mass
+
+        var circle = Bodies.circle(0, 0, radius, { // Use the radius here
+          density: density,
+          friction: 0.9,
+          frictionAir: 0.01,
+          restitution: 0.1,
+          angularVelocity: 0.01,
+          angularDamping: 0.1
+        });
+
+        Body.setPosition(circle, { x: 200, y: 200 });
+
+        World.add(world, circle);
+        buoyantObjects.push(circle);
+      }
+
+      var waterDensity = 1; // Approximate density of water in kg/m³
+
+      Events.on(engine, "afterUpdate", function () {
+        for (var i = 0; i < buoyantObjects.length; i++) {
+          var obj = buoyantObjects[i];
+
+          // Check if object's speed is below threshold
+          var speed = Math.sqrt(Math.pow(obj.velocity.x, 2) + Math.pow(obj.velocity.y, 2));
+          if (speed < 0.5) {
+            // Apply "braking force"
+            var forceMagnitude = 0.055;
+            Body.applyForce(obj, obj.position, {
+              x: -forceMagnitude * obj.velocity.x / speed,
+              y: -forceMagnitude * obj.velocity.y / speed
+            });
+          }
+          // Apply linear damping
+          var linearDamping = 0.11;
+          Body.setVelocity(obj, {
+            x: obj.velocity.x * (1 - linearDamping),
+            y: obj.velocity.y * (1 - linearDamping)
+          });
+
+          // Check if object is below the water level
+          if (obj.position.y > waterLevel) {
+            var submergedHeight = render.canvas.height - obj.position.y;
+            var submergedVolume = submergedHeight * obj.bounds.max.x * 2;
+
+            // Adjust the buoyancy force based on the object's vertical velocity
+            var adjustedBuoyancyForce = submergedVolume * (waterDensity - obj.density) * 0.0001;
+            adjustedBuoyancyForce *= Math.abs(obj.velocity.y) > 0.01 ? 1 : 0.1;
+
+            Body.applyForce(obj, obj.position, { x: 0, y: -adjustedBuoyancyForce });
+          }
+        }
+      });
+    })
+  </script> -->
+
+</body>
+
+</html>

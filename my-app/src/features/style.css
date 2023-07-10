@@ -309,6 +309,12 @@ button:hover {
   background-color: #ff94dd;
 }
 
+.ui {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 /* for smaller screen sizes */
 
 @media screen and (max-width: 800px) {
