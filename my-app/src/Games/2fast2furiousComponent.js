@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-
+import { carFunc, init } from "./2fast2furious";
 
 const FastFurious = () => {
     useEffect(() => {
@@ -24,13 +24,12 @@ const FastFurious = () => {
                 min="1"
                 max="81"
                 step="10"
-                value="0"
-                oninput="updateVelocity(this.value)"
+                defaultValue="20"
             />
-            <span id="velocityValue">0 m/s</span>
+            <p><span id="velocityValue">20 m/s</span></p>
         </div>
         <div id="playBox">
-            <button>Start your engines!</button>
+            <button onClick={carFunc}> Start your engines!</button>
         </div>
     </div>)
 }
