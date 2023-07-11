@@ -36,7 +36,7 @@ const PizzaChallenge = () => {
             <input type="range" id="gravityRange" min="0.0005" max="0.003" step="0.0005"  defaultValue="0.001"/>
         </div>
         <div id="playBox">
-            <button onClick={Challenge}>Pizza Toss</button>
+            <button id="pizzaStart" onClick={Challenge}>Pizza Toss</button>
             <p>Too difficult? Try the standard mode <Link to="/pizzatoss">here!</Link></p>
         </div>
     </div>)

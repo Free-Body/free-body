@@ -78,13 +78,21 @@ class Pyramid {
     this.blockCount--;
     if (this.blockCount === 0) {
       const areaToRender = document.getElementById("areaToRender");
+      const startBtn = document.getElementById("pizzaStart");
+
       areaToRender.style.opacity = 0.75;
       const h1 = document.createElement("h1");
       h1.textContent = "YOU WIN! Click the button to play again!";
       areaToRender.prepend(h1);
+
+      startBtn.disabled = true;
+      startBtn.style.opacity = 0.5;
+
       setTimeout(function () {
         h1.remove();
-        areaToRender.style.opacity = 1;
+        areaToRender.style.opacity = 1;      
+        startBtn.disabled = false;
+      startBtn.style.opacity = 1;
       }, 6000);
     }
   }
