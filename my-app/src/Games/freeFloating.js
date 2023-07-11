@@ -74,8 +74,7 @@ export const startFreeFloat = function () {
         let mass = parseFloat(massRange.value);
         let radius = parseFloat(radiusRange.value); // Adjusting the radius based on the mass
         let density = mass / (1.33*3.14*radius**3); // density of a sphere is mass/volume, and the volume of a sphere is 4/3 pi r^3
-console.log(density)
-        let circle = Bodies.circle(0, 0, radius, { // Use the radius here
+        let circle = Bodies.circle(0, 0, radius*2, {
           density: density,
           friction: 0.9,
           frictionAir: 0.01,

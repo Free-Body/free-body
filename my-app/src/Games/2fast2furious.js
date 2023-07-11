@@ -83,7 +83,13 @@ export const carFunc = function(mode) {
 
   function checkWinCondition() {
     if (carBody.bodies.length > 0) {
-      if (!hasWon && carBody.bodies[0].position.x > 800) {
+      let winConditions;
+      if (mode==="challenge") {
+        winConditions = !hasWon && carBody.bodies[0].position.x >= 600 && carBody.bodies[0].position.x <= 900 && carBody.bodies[0].position.y >= 570;
+      } else {
+        winConditions = !hasWon && carBody.bodies[0].position.x >= 800;
+      }
+      if (winConditions) {
         displayWinMessage();
         Composite.remove(engine.world, carBody, false)
         Events.off(engine, "beforeUpdate", checkWinCondition); // Stop checking the win condition
@@ -188,7 +194,7 @@ function createBodies(mode ) {
     Bodies.rectangle(400, 590, 800, 20, { isStatic: true , friction: friction}),
 
     // Left ramp
-    Bodies.rectangle(260, 550, 400, 20, {
+    Bodies.rectangle(260, 550, 400, 70, {
       isStatic: true,
       angle: -Math.PI * angle,
       label: "Left ramp",
@@ -197,7 +203,7 @@ function createBodies(mode ) {
     }),
   
     // Right ramp
-    Bodies.rectangle(600, 550, 400, 20, {
+    Bodies.rectangle(600, 550, 400, 70, {
       isStatic: true,
       angle: Math.PI * angle,
       label: "Right ramp",
