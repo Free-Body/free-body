@@ -285,7 +285,8 @@
 }
 
 #activityLandDiv img {
-  width: 600px;
+  width: 65vw;
+  margin-top: 2vw;
   height: auto;
   margin-bottom: 2%;
   border-radius: 150px;
