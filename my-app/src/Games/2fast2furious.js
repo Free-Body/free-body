@@ -14,7 +14,7 @@ let runner;
 export const init = function () {
   // create an engine
   engine = Engine.create();
- // create a renderer
+  // create a renderer
   render = Render.create({
     element: document.getElementById("areaToRender"),
     engine: engine,
@@ -34,14 +34,14 @@ export const init = function () {
   runner = Runner.create();
   // run the engine
   Runner.run(runner, engine);
-}
+};
 
 //this function clears world between games
 function clearWorld() {
   Matter.Composite.clear(engine.world, false);
 }
 
-export const carFunc = function() {
+export const carFunc = function () {
   clearWorld();
 
   // Add bodies
@@ -108,7 +108,7 @@ export const carFunc = function() {
 
   // Check the win condition continuously
   Events.on(engine, "beforeUpdate", checkWinCondition);
-}
+};
 
 let boundaryWidth = 20; // Adjust the width as needed
 let boundaryHeight = 600; // Use the height of the render canvas
