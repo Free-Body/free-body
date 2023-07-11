@@ -16,7 +16,7 @@ let runner;
 export const init = function () {
   // create an engine
   engine = Engine.create();
- // create a renderer
+  // create a renderer
   render = Render.create({
     element: document.getElementById("areaToRender"),
     engine: engine,
@@ -36,7 +36,7 @@ export const init = function () {
   runner = Runner.create();
   // run the engine
   Runner.run(runner, engine);
-}
+};
 
 //this function clears world between games
 function clearWorld() {
@@ -92,6 +92,7 @@ export const carFunc = function(mode) {
     }
   }
 }
+
 
 /**
  * Creates a composite with simple car setup of bodies and constraints.
