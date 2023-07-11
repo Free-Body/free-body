@@ -13,6 +13,7 @@ import Header from "../features/HomePage/header";
 import FastFurious from "../Games/2fast2furiousComponent.js";
 import PizzaChallenge from "../Games/pizzaChallengeComponent";
 import FreeFloating from "../Games/freeFloatingComponent";
+import FastFuriousChallenge from "../Games/2fast2furiousChallenge";
 
 const AppRoutes = () => {
   return (
@@ -33,6 +34,7 @@ const AppRoutes = () => {
         <Route path="/pizzatoss" element={<PizzaToss />} />
         <Route path="/2fast2furious" element={<FastFurious />} />
         <Route path="/pizzachallenge" element={<PizzaChallenge/>} />
+        <Route path="/2fast2furiouschallenge" element={<FastFuriousChallenge />} />
         <Route path="/freefloating" element={<FreeFloating />} />
       </Routes>
     </div>

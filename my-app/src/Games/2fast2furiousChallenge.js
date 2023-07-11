@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import { carFunc, init } from "./2fast2furious";
 import { Link } from "react-router-dom";
 
-const FastFurious = () => {
+const FastFuriousChallenge = () => {
     useEffect(() => {
         window.onload=init();
     }, [])
     return (
     <div className="pizzaToss">
-        <h2>2Fast 2Furious 2Ramps</h2>
+        <h2>2Fast 2Furious 2Ramps - CHALLENGE MODE</h2>
         <h3>Help the stunt driver make it across the ramp by adjusting their velocity!</h3>
         <ol>Directions: 
             <li>Slide the velocity to the value you want the car to start at</li>
@@ -16,7 +16,7 @@ const FastFurious = () => {
             <li>Click "Start your engines" to try again with different ramps!</li>
         </ol>
         <ol>Hints: 
-            <li>Going fast can be good, but what will happen if you're going too fast when you start the projectile motion?</li>
+            <li>In challenge mode, the road and ramps have random friction values! How can you overcome the friction force?</li>
         </ol>
         <div id="areaToRender"></div>
         <div>
@@ -32,11 +32,11 @@ const FastFurious = () => {
             <p><span id="velocityValue">20 m/s</span></p>
         </div>
         <div id="playBox">
-            <button id="carStartBtn" onClick={() => carFunc("standard")}> Start your engines!</button>
+            <button id="carStartBtn" onClick={() => carFunc("challenge")}> Start your engines!</button>
             <button id="launchBtn">Re-launch car</button>
-            <p>Too easy? Try the challenge mode <Link to="/2fast2furiouschallenge">here!</Link></p>
+            <p>Too difficult? Try the standard mode <Link to="/2fast2furious">here!</Link></p>
         </div>
     </div>)
 }
 
-export default FastFurious;
+export default FastFuriousChallenge;
