@@ -25,7 +25,7 @@ const FastFurious = () => {
                 type="range"
                 id="velocityInput"
                 min="1"
-                max="61"
+                max="101"
                 step="1"
                 defaultValue="20"
             />

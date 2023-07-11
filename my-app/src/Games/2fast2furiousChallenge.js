@@ -17,6 +17,7 @@ const FastFuriousChallenge = () => {
         </ol>
         <ol>Hints: 
             <li>In challenge mode, the road and ramps have random friction values! How can you overcome the friction force?</li>
+            <li>In challenge mode, it's not enough to make it across the ramp: you must land safely as well!</li>
         </ol>
         <div id="areaToRender"></div>
         <div>
@@ -25,7 +26,7 @@ const FastFuriousChallenge = () => {
                 type="range"
                 id="velocityInput"
                 min="1"
-                max="61"
+                max="101"
                 step="1"
                 defaultValue="20"
             />

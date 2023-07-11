@@ -335,31 +335,17 @@ export const Challenge = function () {
   let pyramidInstance = new Pyramid(610);
   let pyramid = pyramidInstance.body;
 
-  // add mouse control
-  let mouse = Mouse.create(render.canvas),
-    mouseConstraint = MouseConstraint.create(engine, {
-      mouse: mouse,
-      constraint: {
-        stiffness: 0.2,
-        render: {
-          visible: false,
-        },
-      },
-    });
-
   //checks results of collision
   Events.on(engine, "afterUpdate", function () {
     results(
       pyramid,
       pyramidInstance,
       ground2,
-      mouseConstraint,
       pizza,
       realHeight,
       realMass
     );
     if (
-      mouseConstraint.mouse.button === -1 &&
       (pizza.position.x > 190 ||
         pizza.position.y < realHeight - 0.9 * realHeight)
     ) {
@@ -370,6 +356,4 @@ export const Challenge = function () {
   });
 
   Composite.add(engine.world, [ground, ground2, pyramid, pizza, wall]);
-  Composite.add(engine.world, mouseConstraint);
-  render.mouse = mouse;
 };
