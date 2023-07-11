@@ -5,7 +5,7 @@ const About = () => {
   return (
     <div className="aboutContainer">
       <img src={tugImage} alt="tug of war" id="tugimg" />
-      <div class="aboutclass">
+      <div className="aboutclass">
         {/* <h1 id="abouthead">About Us</h1> */}
         <p>
           Welcome to our website, where learning physics becomes an exciting

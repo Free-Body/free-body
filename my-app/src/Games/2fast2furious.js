@@ -1,4 +1,5 @@
 import Matter from "matter-js";
+let road = require("../features/images/road.jpg");
 
 let Engine = Matter.Engine,
   Render = Matter.Render,
@@ -22,7 +23,7 @@ export const init = function () {
       width: 800,
       height: 600,
       pixelRatio: 1,
-      background: "#FAFAFA",
+      background: road,
       wireframes: false,
       showAngleIndicator: true,
       showCollisions: true,
@@ -44,31 +45,10 @@ function clearWorld() {
 export const carFunc = function () {
   clearWorld();
 
+  let bodies = createBodies();
+  
   // Add bodies
-  Composite.add(engine.world, [
-    // Grounds
-    Bodies.rectangle(400, 590, 800, 20, { isStatic: true }), // Bottom ground
-
-    // Left ramp
-    Bodies.rectangle(260, 550, 400, 20, {
-      isStatic: true,
-      angle: -Math.PI * 0.1,
-      label: "Left ramp",
-    }),
-
-    // Right ramp
-    Bodies.rectangle(600, 550, 400, 20, {
-      isStatic: true,
-      angle: Math.PI * 0.1,
-      label: "Right ramp",
-    }),
-
-    // Gap
-    Bodies.rectangle(400, 550, 100, 150, {
-      isStatic: true,
-      label: "Gap",
-    }),
-  ]);
+  Composite.add(engine.world, bodies);
 
   let velocityInput = document.getElementById("velocityInput");
   let velocityValue = document.getElementById("velocityValue");
@@ -80,13 +60,21 @@ export const carFunc = function () {
   });
 
   velocity = parseFloat(velocityInput.value);
+
   // See car function defined later in this file
   let scale = 0.9;
   let carBody = car(60, 570, 150 * scale, 30 * scale, 30 * scale, velocity); // Adjust the position of the car as needed
-
   // Add the car body to the world
   Composite.add(engine.world, [carBody]);
 
+  let launchBtn = document.getElementById('launchBtn');
+
+  launchBtn.addEventListener("click", function() {
+    Composite.remove(engine.world, [carBody])
+    carBody = car(60, 570, 150 * scale, 30 * scale, 30 * scale, velocity);
+    Composite.add(engine.world, [carBody]);
+  });
+  
   let hasWon = false; // Track if the player has already won
 
   // Check car position on the right side of the canvas
@@ -98,29 +86,9 @@ export const carFunc = function () {
     }
   }
 
-  // Display the win message
-  function displayWinMessage() {
-    let winMessage = document.createElement("div");
-    winMessage.textContent = "Congratulations! You won!";
-    winMessage.classList.add("win-message");
-    document.body.appendChild(winMessage);
-  }
-
   // Check the win condition continuously
   Events.on(engine, "beforeUpdate", checkWinCondition);
 };
-
-let boundaryWidth = 20; // Adjust the width as needed
-let boundaryHeight = 600; // Use the height of the render canvas
-let boundaryThickness = 40; // Adjust the thickness as needed
-
-let boundaryLeft = Bodies.rectangle(
-  -boundaryThickness / 2,
-  boundaryHeight / 2 + 40, // Adjust the drop point by modifying the constant value
-  boundaryThickness,
-  boundaryHeight + 80, // Adjust the height by modifying the constant value
-  { isStatic: true }
-);
 
 /**
  * Creates a composite with simple car setup of bodies and constraints.
@@ -155,6 +123,7 @@ function car(xx, yy, width, height, wheelSize, v) {
       },
       density: 0.0002,
     });
+    
   let wheelA = Bodies.circle(xx + wheelAOffset, yy + wheelYOffset, wheelSize, {
     collisionFilter: {
       group: group,
@@ -196,4 +165,39 @@ function car(xx, yy, width, height, wheelSize, v) {
   Composite.addConstraint(car, axelB);
 
   return car;
+}
+
+function createBodies() {
+  let angle  = Math.random() * .3+ .1;
+  return [
+    // Grounds
+    Bodies.rectangle(400, 590, 800, 20, { isStatic: true }),
+
+    // Left ramp
+    Bodies.rectangle(260, 550, 400, 20, {
+      isStatic: true,
+      angle: -Math.PI * angle,
+      label: "Left ramp",
+    }),
+  
+    // Right ramp
+    Bodies.rectangle(600, 550, 400, 20, {
+      isStatic: true,
+      angle: Math.PI * angle,
+      label: "Right ramp",
+    }),
+  ]
+}
+
+// Display the win message
+function displayWinMessage() {
+  const areaToRender = document.getElementById("areaToRender");
+  areaToRender.style.opacity = 0.75;
+  const h1 = document.createElement("h1");
+  h1.textContent = "YOU WIN! Click the button to play again!"
+  areaToRender.prepend(h1);
+  setTimeout(function () {
+    h1.remove()
+    areaToRender.style.opacity = 1;
+  }, 6000);
 }

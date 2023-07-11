@@ -1,4 +1,5 @@
 import Matter from "matter-js"
+let ocean = require("../features/images/ocean.jpg");
 
 let Engine = Matter.Engine,
   Render = Matter.Render,
@@ -6,8 +7,6 @@ let Engine = Matter.Engine,
   Body = Matter.Body,
   Bodies = Matter.Bodies,
   Composite = Matter.Composite,
-  Composites = Matter.Composites,
-  Constraint = Matter.Constraint,
   Mouse = Matter.Mouse,
   MouseConstraint = Matter.MouseConstraint,
   Events = Matter.Events;
@@ -24,10 +23,10 @@ export const init = function () {
     element: document.getElementById("areaToRender"),
     engine: engine,
     options: {
-      width: 1000,
+      width: 770,
       height: 600,
       pixelRatio: 1,
-      background: "skyblue",
+      background: ocean,
       wireframes: false,
     },
   });
@@ -51,12 +50,19 @@ export const startFreeFloat = function () {
     });
 
     let massRange = document.getElementById("massSlider");
+    let radiusRange = document.getElementById("radiusSlider");
 
-    // adjust mass
     massRange.addEventListener("mouseup", function () {
         let mass = massRange.value;
         let massValue = document.getElementById("massValue");
         massValue.innerText = `${mass}`
+        Engine.update(engine);
+    });
+    
+    radiusRange.addEventListener("mouseup", function () {
+        let radius = radiusRange.value;
+        let radiusValue = document.getElementById("radiusValue");
+        radiusValue.innerText = `${radius}`
         Engine.update(engine);
     });
 
@@ -66,10 +72,9 @@ export const startFreeFloat = function () {
     
     addObjectButton.addEventListener("click", function () {
         let mass = parseFloat(massRange.value);
-        let density = mass / 100; // Density now ranges from 0.001 to 1 kg/m³
-
-        let radius = mass; // Adjusting the radius based on the mass
-
+        let radius = parseFloat(radiusRange.value); // Adjusting the radius based on the mass
+        let density = mass / (1.33*3.14*radius**3); // density of a sphere is mass/volume, and the volume of a sphere is 4/3 pi r^3
+console.log(density)
         let circle = Bodies.circle(0, 0, radius, { // Use the radius here
           density: density,
           friction: 0.9,
@@ -122,7 +127,7 @@ export const startFreeFloat = function () {
               y: -forceMagnitude * obj.velocity.y / speed
             });
           }
-          // Apply linear damping
+        //   // Apply linear damping
           var linearDamping = 0.11;
           Body.setVelocity(obj, {
             x: obj.velocity.x * (1 - linearDamping),
@@ -130,8 +135,8 @@ export const startFreeFloat = function () {
           });
 
           // Check if object is below the water level
-          if (obj.position.y > waterLevel) {
-            var submergedHeight = render.canvas.height - obj.position.y;
+          if (obj.density < waterDensity) {
+            var submergedHeight = obj.position.y - waterLevel;
             var submergedVolume = submergedHeight * obj.bounds.max.x * 2;
 
             // Adjust the buoyancy force based on the object's vertical velocity
@@ -139,6 +144,9 @@ export const startFreeFloat = function () {
             adjustedBuoyancyForce *= Math.abs(obj.velocity.y) > 0.01 ? 1 : 0.1;
 
             Body.applyForce(obj, obj.position, { x: 0, y: -adjustedBuoyancyForce });
+          } else {
+            console.log(obj.density)
+            Body.applyForce(obj, obj.position, { x: 0, y: 0.0001-adjustedBuoyancyForce });
           }
         }
     });
