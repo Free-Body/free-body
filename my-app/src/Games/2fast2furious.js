@@ -4,6 +4,7 @@ let road = require("../features/images/road.jpg");
 let Engine = Matter.Engine,
   Render = Matter.Render,
   Runner = Matter.Runner,
+  Body = Matter.Body,
   Bodies = Matter.Bodies,
   Composite = Matter.Composite,
   Events = Matter.Events;
@@ -39,13 +40,13 @@ export const init = function () {
 
 //this function clears world between games
 function clearWorld() {
-  Matter.Composite.clear(engine.world, false);
+  Composite.clear(engine.world, false, true);
 }
 
-export const carFunc = function() {
+export const carFunc = function(mode) {
   clearWorld();
 
-  let bodies = createBodies();
+  let bodies = createBodies(mode);
   
   // Add bodies
   Composite.add(engine.world, bodies);
@@ -63,31 +64,33 @@ export const carFunc = function() {
 
   // See car function defined later in this file
   let scale = 0.9;
-  let carBody = car(60, 570, 150 * scale, 30 * scale, 30 * scale, velocity); // Adjust the position of the car as needed
-  // Add the car body to the world
-  Composite.add(engine.world, [carBody]);
 
   let launchBtn = document.getElementById('launchBtn');
+  let carBody = car(60, 570, 150 * scale, 30 * scale, 30 * scale, velocity, true);
+  Composite.add(engine.world, carBody);
 
   launchBtn.addEventListener("click", function() {
-    Composite.remove(engine.world, [carBody])
-    carBody = car(60, 570, 150 * scale, 30 * scale, 30 * scale, velocity);
-    Composite.add(engine.world, [carBody]);
+    Composite.remove(engine.world, carBody);
+    let newCar = car(60, 570, 150 * scale, 30 * scale, 30 * scale, velocity, false);
+    Composite.add(engine.world, newCar);
+    carBody = newCar;
   });
   
   let hasWon = false; // Track if the player has already won
 
-  // Check car position on the right side of the canvas
-  function checkWinCondition() {
-    if (!hasWon && carBody.bodies[0].position.x > 800) {
-      hasWon = true; // Set the flag to true to prevent further checks
-      displayWinMessage();
-      Events.off(engine, "beforeUpdate", checkWinCondition); // Stop checking the win condition
-    }
-  }
-
   // Check the win condition continuously
   Events.on(engine, "beforeUpdate", checkWinCondition);
+
+  function checkWinCondition() {
+    if (carBody.bodies.length > 0) {
+      if (!hasWon && carBody.bodies[0].position.x > 800) {
+        displayWinMessage();
+        Composite.remove(engine.world, carBody, false)
+        Events.off(engine, "beforeUpdate", checkWinCondition); // Stop checking the win condition
+        hasWon = true;
+      }
+    }
+  }
 }
 
 /**
@@ -101,7 +104,11 @@ export const carFunc = function() {
  * @param {number} velocity
  * @return {composite} A new composite car body
  */
-function car(xx, yy, width, height, wheelSize, v) {
+function car(xx, yy, width, height, wheelSize, v, first) {
+  if (!first) {
+    Matter.Composite.clear(engine.world, true, true);  
+  }
+
   let Body = Matter.Body,
     Bodies = Matter.Bodies,
     Composite = Matter.Composite,
@@ -167,17 +174,25 @@ function car(xx, yy, width, height, wheelSize, v) {
   return car;
 }
 
-function createBodies() {
+function createBodies(mode ) {
   let angle  = Math.random() * .3+ .1;
+  let friction;
+  if (mode === "challenge") {
+    friction = Math.random() * .9 + .1;
+  } else {
+    friction = .1;
+  }
   return [
     // Grounds
-    Bodies.rectangle(400, 590, 800, 20, { isStatic: true }),
+    Bodies.rectangle(400, 590, 800, 20, { isStatic: true , friction: friction}),
 
     // Left ramp
     Bodies.rectangle(260, 550, 400, 20, {
       isStatic: true,
       angle: -Math.PI * angle,
       label: "Left ramp",
+      friction: friction,
+      density: 1
     }),
   
     // Right ramp
@@ -185,6 +200,8 @@ function createBodies() {
       isStatic: true,
       angle: Math.PI * angle,
       label: "Right ramp",
+      friction: friction,
+      density: 1
     }),
   ]
 }
@@ -192,12 +209,25 @@ function createBodies() {
 // Display the win message
 function displayWinMessage() {
   const areaToRender = document.getElementById("areaToRender");
+  const launchBtn = document.getElementById('launchBtn');
+  const startBtn =  document.getElementById('carStartBtn');
+
   areaToRender.style.opacity = 0.75;
   const h1 = document.createElement("h1");
   h1.textContent = "YOU WIN! Click the button to play again!"
   areaToRender.prepend(h1);
+
+  launchBtn.disabled = true;
+  startBtn.disabled = true;
+  launchBtn.style.opacity = 0.5;
+  startBtn.style.opacity = 0.5;
+
   setTimeout(function () {
     h1.remove()
     areaToRender.style.opacity = 1;
+    launchBtn.disabled = false;
+    startBtn.disabled = false;
+    launchBtn.style.opacity = 1;
+    startBtn.style.opacity = 1;
   }, 6000);
 }
