@@ -23,8 +23,8 @@ const Projectiles = () => {
         <li>Δx = v<sub>0</sub> t + 1/2 a t<sup>2</sup> where a: acceleration. This equation is similar to the previous, but uses acceleration instead of change in velocity, since change in velocity and acceleration are the same!</li>
         <li>v<sup>2</sup> = v<sub>0</sub><sup>2</sup> + 2aΔx. This equation is similar to the first equation, but it uses change in position instead of time. It shows that an increase in velocity will lead to more of a position displacement. </li>
       </ul>
-      <p>In projectile motion, objects are launched an an angle and are under the influence of gravity. Gravity itself is acceleration towards the earth, and since acceleration changes velocity, this will affect either the magnitude or direction of the velocity of an object. This is why objects in projectile motion move in an arc rather than a straight line!  </p>
-      <img src={require("../images/pm.jpeg")} alt="projectile motion graph" /> <a href="https://www.pathwayz.org/Tree/Plain/PROJECTILE+MOTION">Source</a>
+      <p>In projectile motion, objects are launched an an angle and are under the influence of gravity. Gravity itself is acceleration towards the earth, and since acceleration changes velocity, this will affect either the magnitude or direction of the velocity of an object. This is why objects in projectile motion move in an arc rather than a straight line! Since velocity is a vector, it has a vertical and horizontal component. Since gravity acts in the same direction as the vertical component, the vertical component of the velocity will change. As the object moves upwards, its vertical velocity will slow down. At the peak, the vertical velocity will switch directions and move downwards. As it moves downwards, its vertical velocity will speed up. </p>
+      <img src={require("../images/path.png")} alt="projectile motion graph" /> <a href="https://www.pathwayz.org/Tree/Plain/PROJECTILE+MOTION">Source</a>
     </div>
   );
 };
