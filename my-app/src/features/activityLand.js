@@ -12,7 +12,7 @@ function InteractiveImage() {
         <a href="/pizzatoss" style={{ position: "absolute", top: "0", left: "0" }}>
           <img id="pizzacar" src={PizzacarImage} alt="Pizza Car" style={{ width: "15vw" }} />
         </a>
-        <a href="/2fast2furious" style={{ position: "absolute", top: "0", right: "0", transform: "translate(-250px, 20px)" }}>
+        <a href="/2fast2furious" style={{ position: "absolute", top: "0", right: "0", transform: "translate(-330px, 20px)" }}>
           <img id="car" src={CarImage} alt="2 Fast 2 Furious" style={{ width: "15vw" }} />
         </a>
         <a href="/freefloating" style={{ position: "absolute", bottom: "0", left: "0", transform: "translate(23px, -49px)" }}>
