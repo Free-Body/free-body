@@ -173,6 +173,12 @@
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
   z-index: 9999;
+  margin: 0;
+  transform: translate(0px, -600px);
+}
+
+.teamContainer2 {
+
 }
 
 .person-card {
@@ -184,7 +190,6 @@
   padding: 10px;
   align-items: center;
   align-content: center;
-  transform: translate(-3px, -350px);
 }
 
 .person-card img {
@@ -220,7 +225,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
 }
 
 #activityLandDiv {
@@ -231,18 +235,20 @@
 #meet {
   background-color: transparent;
   color: #fff;
-  z-index: 9999;
   font-size: 33px;
   font-family: Boogaloo;
   font-style: normal;
   font-weight: 400;
   text-shadow: 1px 1px 2px pink;
+  z-index: 9999;
+  margin: 0;
 }
 
 #backimg {
-  width: 35vw;
+  width: 50vw;
   height: auto;
   z-index: 0;
+  text-align: center;
 }
 
 .aboutclass {
@@ -335,10 +341,16 @@ button:hover {
 
 /* for smaller screen sizes */
 
+
+@media screen and (max-width: 1100px) and (min-width: 801px) {
+  .grid {
+    transform: translate(0px, -400px);
+  }
+}
+
 @media screen and (max-width: 800px) {
   .appRoutesContainer {
     align-items: center;
-    
   }
 
   .navbar-container {
@@ -359,6 +371,7 @@ button:hover {
 
   .home-pic {
     width: 40vw;
+    height: 40vh;
   }
 
   .picture-tag {
@@ -370,12 +383,12 @@ button:hover {
   }
 
   p {
-    font-size: smaller;
+    font-size: medium;
   }
 
   .aboutclass p {
     white-space: wrap;
-    font-size: 4vw;
+    font-size: medium;
   }
 
   .aboutclass {
@@ -389,17 +402,18 @@ button:hover {
     justify-content: center;
   }
 
+  .teamContainer, #meet, .person-name {
+    white-space: wrap;
+    font-size: medium;
+  }
+
   #tugimg {
     z-index: 9999;
   }
 
   .grid {
-    margin-top: 30px;
     grid-template-columns: repeat(1, 1fr);
     width: 50vw;
-  }
-
-  #activityLandDiv img  {
-    width: 300px;
+    transform: translate(0px, 0px);
   }
 }
