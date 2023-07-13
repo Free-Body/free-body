@@ -367,7 +367,7 @@ button:hover {
 
   .home-pic {
     width: 40vw;
-    height: 40vh;
+    height: 20vh;
   }
 
   .picture-tag {
@@ -388,7 +388,7 @@ button:hover {
   }
 
   .aboutclass {
-    margin-left: 300px;
+    transform: translate(0px, 0px);
   }
 
   .aboutContainer {
@@ -410,6 +410,18 @@ button:hover {
   .grid {
     grid-template-columns: repeat(1, 1fr);
     width: 50vw;
-    transform: translate(0px, 0px);
+    transform: translate(-50px, 0px);
+  }
+
+  .person-card img {
+    width: 60vw;
+  }
+
+  .pizzaToss {
+    font-size: small;
+  }
+
+  .pizzaToss {
+    width: 100%
   }
 }
