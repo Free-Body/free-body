@@ -13,7 +13,6 @@ const Home = () => {
   return (
     <div className="teamContainer">
       <div><p id="meet">Meet our team on LinkedIn!</p></div>
-      <div className="teamContainer2">
         <img src={backImage} alt="background" id="backimg" />
         <div className="grid">
           <div
@@ -56,7 +55,6 @@ const Home = () => {
             <img src={carinaImage} alt="Carina" id="carina.png" />
             <p className="person-name">Carina Carlos</p>
           </div>
-        </div>
       </div>
     </div>
   );
