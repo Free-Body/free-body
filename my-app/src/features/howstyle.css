@@ -93,3 +93,102 @@
     font-size: medium;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.hintPopup {
+  position: relative;
+  display: inline-block;
+  font-size: 2vw;
+}
+
+.hintButton {
+  cursor: pointer;
+}
+
+.hintText {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: none;
+  font-size: 20px;
+  width: 300px;
+}
+
+.hintPopup:hover .hintText {
+  display: block;
+}
+
+.helpLink {
+  text-decoration: none;
+  color: inherit;
+  font-size: 2vw;
+}
+
+.hintHelpContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.hintPopup {
+  margin-right: 10px;
+}
+
+.helpLink {
+  text-decoration: none;
+  color: inherit;
+  font-size: 2vw;
+}
+
+.challenge {
+  font-size: 1.5vw;
+}

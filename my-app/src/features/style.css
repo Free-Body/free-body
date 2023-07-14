@@ -336,7 +336,11 @@ button:hover {
 }
 
 .questions {
-  color:#fff
+  color:#fff;
+  font-size: 1.2vw;
+}
+.directions{
+  font-size: 1.5vw;
 }
 /* for smaller screen sizes */
 
