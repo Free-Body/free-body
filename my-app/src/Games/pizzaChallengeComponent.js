@@ -21,6 +21,13 @@ const PizzaChallenge = () => {
             <li>Velocity is a vector! How do we get the sum of two vectors?</li>
             <li>Mass doesn't affect projectile motion, but size helps with knocking down more things!</li>
         </ol>
+        <ol className="questions"> Think like a scientist:
+            <li>Keep the y velocity constant and change the x velocity. How does the x velocity change your path?</li>
+            <li>Keep the x velocity constant and change the y velocity. How does the y velocity change the path?</li>
+            <li>Change both velocities. How can you best approach optimizing the path?</li>
+            <li>How do different magnitudes of gravity affect your path?</li>
+            <li>How can you tie the above information to the equations you know?</li>
+        </ol>
         <div id="areaToRender"></div>
         <div>
             <label htmlFor="xvelocityRange">X Velocity: <span id="xvelocityVal">10</span> m/s</label>

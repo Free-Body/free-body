@@ -19,6 +19,11 @@ const FastFuriousChallenge = () => {
             <li>In challenge mode, the road and ramps have random friction values! How can you overcome the friction force?</li>
             <li>In challenge mode, it's not enough to make it across the ramp: you must land safely as well!</li>
         </ol>
+        <ol  className="questions"> Think like a scientist:
+            <li>How can you optimize the velocity so the car lands on the ground safely?</li>
+            <li>When you reset the game, try to see how the same velocity looks different for different ramps. Hypothesize how friction is affecting the different scenarios. </li>
+            <li>How can you tie the above information to the equations you know?</li>
+        </ol>
         <div id="areaToRender"></div>
         <div>
             <label htmlFor="velocityInput">Velocity: </label>

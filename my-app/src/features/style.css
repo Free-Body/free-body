@@ -307,8 +307,8 @@
   font-size: large;
 }
 
-.pizzaToss ol {
-  list-style-type: none;
+.pizzaToss li {
+  text-align: left;
 }
 
 .appContainer {
@@ -335,6 +335,9 @@ button:hover {
   flex-wrap: wrap;
 }
 
+.questions {
+  color:#fff
+}
 /* for smaller screen sizes */
 
 
