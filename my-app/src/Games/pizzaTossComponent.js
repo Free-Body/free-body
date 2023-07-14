@@ -22,6 +22,12 @@ const PizzaToss = () => {
             <li>You can change the path of the pizza toss by changin the angle or the height you toss at</li>
             <li>Mass doesn't affect projectile motion, but size helps with knocking down more things!</li>
         </ol>
+        <ol className="questions">Think like a scientist:
+            <li>What happens to the path of the pizza when you pull back more? What about when you pull back less?</li>
+            <li>Challenge yourself! Try not to adjust the height too much and knock down the rats with a projectile path. Why would this be more difficult? </li>
+            <li>Try changing gravity. How does that affect the path of the projectile? Is it easier or harder at higher magnitudes of gravity, and why?</li>
+            <li>How can you tie the above information to the equations you know?</li>
+        </ol>
         <div id="areaToRender"></div>
         <div>
             <label htmlFor="heightRange">Height: <span id="heightVal">210</span> m</label>
