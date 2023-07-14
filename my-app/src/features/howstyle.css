@@ -23,6 +23,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
+  border-radius: 20vw;
 }
 
 .howimages .image-wrapper {
@@ -30,7 +31,6 @@
 }
 
 .howimages img {
-  border-radius: 20px;
   width: 100%;
   height: auto;
 }
@@ -60,9 +60,9 @@
 }
 
 .howitworks {
-  color: #004aad;
+  color: #fff;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 1.25vw;
   font-family: Boogaloo;
   font-style: normal;
   font-weight: 400;
@@ -156,7 +156,6 @@
   background-color: white;
   padding: 10px;
   border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: none;
   font-size: 20px;
   width: 300px;
@@ -194,4 +193,52 @@
 }
 .questions{
   width: 55vw;
+}
+
+.keyword {
+  color: white;
+}
+
+.formula {
+  color: white;
+}
+.howitworks {
+  padding: 20px;
+}
+
+.head {
+  color: #004aad;
+  font-size: 2.5vw;
+  margin-bottom: 20px;
+}
+
+p {
+  color: #004aad;
+  margin-bottom: 10px;
+}
+
+ul {
+  color:#004aad;
+  margin-bottom: 10px;
+  padding-left: 20px;
+}
+
+.keyword {
+  color: white;
+  background-color: #004aad;
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+.formula {
+  color: white;
+  background-color: #004aad;
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
 }
