@@ -33,6 +33,7 @@
 .howimages img {
   width: 100%;
   height: auto;
+  border-radius:4vw;
 }
 
 .howimages h2 {
@@ -51,6 +52,7 @@
   color: #100870;
   align-items: center;
   text-align: center;
+  font-size:34px;
 }
 
 .head {
@@ -242,3 +244,7 @@ img {
   height: auto;
   margin-bottom: 10px;
 }
+.howimages1{
+  border-radius:40vw;
+}
+
